@@ -1,0 +1,20 @@
+{
+  "name": "go-bunnynet",
+  "version": "0.1.0",
+  "description": "Unofficial Go client for the Bunny.net core API: CDN, DNS, storage and video library configuration, statistics, load balancers and billing.",
+  "author": {
+    "name": "psyb0t",
+    "url": "https://github.com/psyb0t"
+  },
+  "homepage": "https://github.com/psyb0t/go-bunnynet",
+  "repository": "https://github.com/psyb0t/go-bunnynet",
+  "license": "MIT",
+  "keywords": [
+    "bunnynet",
+    "cdn",
+    "api-client",
+    "go-library",
+    "openapi"
+  ],
+  "skills": "./skills/"
+}

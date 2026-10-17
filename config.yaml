@@ -1,0 +1,14 @@
+package: bunnynet
+generate:
+  client: true
+  models: true
+output: client.gen.go
+output-options:
+  resolve-type-name-collisions: true
+  # Keep unformatted numbers in float64 rather than the default float32.
+  type-mapping:
+    number:
+      default:
+        type: float64
+compatibility:
+  always-prefix-enum-values: true
