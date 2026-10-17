@@ -6,7 +6,7 @@ Unofficial Go client for the Bunny.net core API, generated from the public OpenA
 
 One generated package, `bunnynet`, at the module root, driven by `gen.go`:
 
-`scripts/fetch-spec.sh` downloads `https://core-api-public-docs.b-cdn.net/docs/v3/public.json` to `api/openapi.json`, validates the document, then oapi-codegen with `config.yaml` writes `client.gen.go`. All operations in the core spec are generated. No spec patch is currently needed.
+`scripts/fetch-spec.sh` downloads `https://core-api-public-docs.b-cdn.net/docs/v3/public.json` to `api/openapi.json`, validates the document, then oapi-codegen with `config.yaml` writes `client.gen.go`. All operations in the core spec are generated. No spec patch is applied.
 
 ## Stack
 
@@ -43,7 +43,6 @@ make sec       # gitleaks, govulncheck, semgrep
 - Success responses without schemas expose status and raw body. Adding a pull zone has no typed success field.
 - Keep the `number` to `float64` mapping in `config.yaml`.
 - `make generate` downloads the current spec. Review the generated diff after each regeneration.
-- The daily regeneration workflow protects workflows, the Makefile, rules, lint and security settings, and the fetch script from automatic repairs. Changes there need manual attention.
 - `.github/workflows/regen.yml` regenerates the client every day and releases the result. When the checks fail, Claude edits the repository to fix them, but a fix may not touch the paths listed under `fix_protected_paths` in that workflow: the workflows, the Makefile, `AGENTS.md`, `.agents/rules/`, the lint, security and spec download scripts and their configs. A problem that needs a change there fails the run and needs a manual fix.
 
 ## Rules

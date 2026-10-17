@@ -66,6 +66,8 @@ Check `StatusCode()` and the decoded status field before using a response. The e
 
 Pull-zone listing declares an array schema, but its prose describes a paginated object for `page > 0`. Leave `Page` unset for typed array decoding. For paginated listing, use the raw `PullZonePublicIndexAll` method and decode the body yourself. The client does not paginate or retry automatically.
 
+The full API is in the [Go reference](https://pkg.go.dev/github.com/psyb0t/go-bunnynet); after `go get`, `go doc github.com/psyb0t/go-bunnynet` prints it locally.
+
 ## Auth
 
 The default scheme puts the account API key in the `AccessKey` header. Set it through `WithRequestEditorFn`, as above, using `BUNNYNET_API_KEY`. The base URL is `https://api.bunny.net`. Storage zone passwords and video library keys belong to separate APIs.
