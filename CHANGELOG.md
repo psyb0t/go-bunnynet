@@ -2,6 +2,13 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.2.0, 2026-10-19
+
+- `(*Client).StorageZonePublicGetStorageZoneRegions` and `(*ClientWithResponses).StorageZonePublicGetStorageZoneRegionsWithResponse` are gone. Use `(*Client).GetStoragezoneRegionsEndpointGetStorageZoneRegions` and `(*ClientWithResponses).GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse` instead, matching a new operation ID in the Bunny.net spec for `GET /storagezone/regions`.
+- The matching request builder, response type and parse function are renamed too: `NewStorageZonePublicGetStorageZoneRegionsRequest` is now `NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest`, `StorageZonePublicGetStorageZoneRegionsResponse` is now `GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse`, and `ParseStorageZonePublicGetStorageZoneRegionsResponse` is now `ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse`.
+- `StorageRegionModel` no longer has `Code`, `Continent`, `Hostname`, `IsS3Supported`, `Latitude`, `Longitude`, `PricePerGigabyte`, `S3Hostname` or `Tier`. It now has `Id` and `Url` instead. `Name` is unchanged.
+- `GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse` now also recognizes a 401 status with no content type, instead of falling through unhandled.
+
 ## v0.1.1, 2026-10-17
 
 - Documentation only. The agent skill explains how to look up every endpoint, parameter and model with `go doc` or on pkg.go.dev, and declares its license.

@@ -4920,35 +4920,14 @@ type StickySessionType int
 
 // StorageRegionModel defines model for StorageRegionModel.
 type StorageRegionModel struct {
-	// Code The storage region code
-	Code *string `json:"Code,omitempty"`
+	// Id The unique identifier for the storage region
+	Id *string `json:"Id,omitempty"`
 
-	// Continent The continent code: EU (Europe), NA (North America), AS (Asia), OC (Oceania), SA (South America) or AF (Africa)
-	Continent *string `json:"Continent,omitempty"`
-
-	// Hostname The storage API hostname for the region
-	Hostname *string `json:"Hostname,omitempty"`
-
-	// IsS3Supported Whether the region supports S3 compatibility
-	IsS3Supported *bool `json:"IsS3Supported,omitempty"`
-
-	// Latitude The approximate latitude of the storage region in decimal degrees
-	Latitude *float64 `json:"Latitude,omitempty"`
-
-	// Longitude The approximate longitude of the storage region in decimal degrees
-	Longitude *float64 `json:"Longitude,omitempty"`
-
-	// Name The display name of the storage region
+	// Name The name of the storage region
 	Name *string `json:"Name,omitempty"`
 
-	// PricePerGigabyte The standard storage price in USD per GB per month, before discounts
-	PricePerGigabyte *float64 `json:"PricePerGigabyte,omitempty"`
-
-	// S3Hostname The S3 API hostname, or null when S3 compatibility is not supported
-	S3Hostname *string `json:"S3Hostname,omitempty"`
-
-	// Tier The storage tier: 0 for Standard (HDD), 1 for Edge (SSD)
-	Tier *int32 `json:"Tier,omitempty"`
+	// Url The storage endpoint URL for this region
+	Url *string `json:"Url,omitempty"`
 }
 
 // StorageZoneEgressStatisticsModel defines model for StorageZoneEgressStatisticsModel.
@@ -11216,10 +11195,10 @@ type ClientInterface interface {
 	// Corresponds with POST /storagezone/checkavailability (the `StorageZonePublicCheckAvailability` operationId).
 	StorageZonePublicCheckAvailability(ctx context.Context, body StorageZonePublicCheckAvailabilityJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StorageZonePublicGetStorageZoneRegions Get Storage Zone Regions
+	// GetStoragezoneRegionsEndpointGetStorageZoneRegions Get Storage Zone Regions
 	//
-	// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
-	StorageZonePublicGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
+	GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// StorageZonePublicResetReadOnlyPassword Reset Read-Only Password
 	//
@@ -13368,11 +13347,11 @@ func (c *Client) StorageZonePublicCheckAvailability(ctx context.Context, body St
 	return c.Client.Do(req)
 }
 
-// StorageZonePublicGetStorageZoneRegions Get Storage Zone Regions
+// GetStoragezoneRegionsEndpointGetStorageZoneRegions Get Storage Zone Regions
 //
-// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
-func (c *Client) StorageZonePublicGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewStorageZonePublicGetStorageZoneRegionsRequest(c.Server)
+// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
+func (c *Client) GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -18147,8 +18126,8 @@ func NewStorageZonePublicCheckAvailabilityRequestWithBody(server string, content
 	return req, nil
 }
 
-// NewStorageZonePublicGetStorageZoneRegionsRequest constructs an http.Request for the StorageZonePublicGetStorageZoneRegions method
-func NewStorageZonePublicGetStorageZoneRegionsRequest(server string) (*http.Request, error) {
+// NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest constructs an http.Request for the GetStoragezoneRegionsEndpointGetStorageZoneRegions method
+func NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -20535,12 +20514,12 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /storagezone/checkavailability (the `StorageZonePublicCheckAvailability` operationId).
 	StorageZonePublicCheckAvailabilityWithResponse(ctx context.Context, body StorageZonePublicCheckAvailabilityJSONRequestBody, reqEditors ...RequestEditorFn) (*StorageZonePublicCheckAvailabilityResponse, error)
 
-	// StorageZonePublicGetStorageZoneRegionsWithResponse Get Storage Zone Regions
+	// GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse Get Storage Zone Regions
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
-	StorageZonePublicGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*StorageZonePublicGetStorageZoneRegionsResponse, error)
+	// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
+	GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error)
 
 	// StorageZonePublicResetReadOnlyPasswordWithResponse Reset Read-Only Password
 	//
@@ -24266,7 +24245,7 @@ func (r StorageZonePublicCheckAvailabilityResponse) ContentType() string {
 	return ""
 }
 
-type StorageZonePublicGetStorageZoneRegionsResponse struct {
+type GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -24274,17 +24253,17 @@ type StorageZonePublicGetStorageZoneRegionsResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r StorageZonePublicGetStorageZoneRegionsResponse) GetJSON200() *[]StorageRegionModel {
+func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) GetJSON200() *[]StorageRegionModel {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r StorageZonePublicGetStorageZoneRegionsResponse) GetBody() []byte {
+func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r StorageZonePublicGetStorageZoneRegionsResponse) Status() string {
+func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -24292,7 +24271,7 @@ func (r StorageZonePublicGetStorageZoneRegionsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r StorageZonePublicGetStorageZoneRegionsResponse) StatusCode() int {
+func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -24300,7 +24279,7 @@ func (r StorageZonePublicGetStorageZoneRegionsResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r StorageZonePublicGetStorageZoneRegionsResponse) ContentType() string {
+func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -27064,17 +27043,17 @@ func (c *ClientWithResponses) StorageZonePublicCheckAvailabilityWithResponse(ctx
 	return ParseStorageZonePublicCheckAvailabilityResponse(rsp)
 }
 
-// StorageZonePublicGetStorageZoneRegionsWithResponse Get Storage Zone Regions
+// GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse Get Storage Zone Regions
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
-func (c *ClientWithResponses) StorageZonePublicGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*StorageZonePublicGetStorageZoneRegionsResponse, error) {
-	rsp, err := c.StorageZonePublicGetStorageZoneRegions(ctx, reqEditors...)
+// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
+func (c *ClientWithResponses) GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error) {
+	rsp, err := c.GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseStorageZonePublicGetStorageZoneRegionsResponse(rsp)
+	return ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse(rsp)
 }
 
 // StorageZonePublicResetReadOnlyPasswordWithResponse Reset Read-Only Password
@@ -30410,15 +30389,15 @@ func ParseStorageZonePublicCheckAvailabilityResponse(rsp *http.Response) (*Stora
 	return response, nil
 }
 
-// ParseStorageZonePublicGetStorageZoneRegionsResponse parses an HTTP response from a StorageZonePublicGetStorageZoneRegionsWithResponse call
-func ParseStorageZonePublicGetStorageZoneRegionsResponse(rsp *http.Response) (*StorageZonePublicGetStorageZoneRegionsResponse, error) {
+// ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse parses an HTTP response from a GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse call
+func ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse(rsp *http.Response) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &StorageZonePublicGetStorageZoneRegionsResponse{
+	response := &GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -30430,6 +30409,9 @@ func ParseStorageZonePublicGetStorageZoneRegionsResponse(rsp *http.Response) (*S
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case rsp.StatusCode == 401:
+		break // No content-type
 
 	case rsp.StatusCode == 500:
 		break // No content-type
