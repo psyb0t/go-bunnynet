@@ -691,14 +691,17 @@ func (e LogOrdering) Valid() bool {
 
 // Defines values for OptimizerHtmlToMarkdownType.
 const (
-	OptimizerHtmlToMarkdownTypeOff    OptimizerHtmlToMarkdownType = 0
-	OptimizerHtmlToMarkdownTypeSimple OptimizerHtmlToMarkdownType = 1
+	OptimizerHtmlToMarkdownTypeOff         OptimizerHtmlToMarkdownType = 0
+	OptimizerHtmlToMarkdownTypePrerendered OptimizerHtmlToMarkdownType = 2
+	OptimizerHtmlToMarkdownTypeSimple      OptimizerHtmlToMarkdownType = 1
 )
 
 // Valid indicates whether the value is a known member of the OptimizerHtmlToMarkdownType enum.
 func (e OptimizerHtmlToMarkdownType) Valid() bool {
 	switch e {
 	case OptimizerHtmlToMarkdownTypeOff:
+		return true
+	case OptimizerHtmlToMarkdownTypePrerendered:
 		return true
 	case OptimizerHtmlToMarkdownTypeSimple:
 		return true
@@ -2832,6 +2835,7 @@ type OptimizerClassModel struct {
 
 // OptimizerHtmlToMarkdownType 0 = Off
 // 1 = Simple
+// 2 = Prerendered
 type OptimizerHtmlToMarkdownType int
 
 // OptimizerStatisticsModel defines model for OptimizerStatisticsModel.
@@ -3367,7 +3371,7 @@ type PullZoneAddModel struct {
 	// OptimizerImageQuality Determines the image quality for desktop clients
 	OptimizerImageQuality *int32 `json:"OptimizerImageQuality,omitempty"`
 
-	// OptimizerLlmsTxt Determines if the llms.txt file can be generated and served by the Optimizer
+	// OptimizerLlmsTxt Determines if the llms.txt file should be served when requested
 	OptimizerLlmsTxt *bool `json:"OptimizerLlmsTxt,omitempty"`
 
 	// OptimizerMinifyCSS Determines if the CSS minifcation should be enabled
@@ -3937,7 +3941,7 @@ type PullZoneModel struct {
 	// OptimizerImageQuality Determines the image quality for desktop clients
 	OptimizerImageQuality *int32 `json:"OptimizerImageQuality,omitempty"`
 
-	// OptimizerLlmsTxt Determines if the llms.txt file can be generated and served by the Optimizer
+	// OptimizerLlmsTxt Determines if the llms.txt file should be served when requested
 	OptimizerLlmsTxt *bool `json:"OptimizerLlmsTxt,omitempty"`
 
 	// OptimizerMinifyCSS Determines if the CSS minifcation should be enabled
@@ -4477,7 +4481,7 @@ type PullZoneSettingsModel struct {
 	// OptimizerImageQuality Determines the image quality for desktop clients
 	OptimizerImageQuality *int32 `json:"OptimizerImageQuality,omitempty"`
 
-	// OptimizerLlmsTxt Determines if the llms.txt file can be generated and served by the Optimizer
+	// OptimizerLlmsTxt Determines if the llms.txt file should be served when requested
 	OptimizerLlmsTxt *bool `json:"OptimizerLlmsTxt,omitempty"`
 
 	// OptimizerMinifyCSS Determines if the CSS minifcation should be enabled
@@ -4920,14 +4924,38 @@ type StickySessionType int
 
 // StorageRegionModel defines model for StorageRegionModel.
 type StorageRegionModel struct {
-	// Id The unique identifier for the storage region
-	Id *string `json:"Id,omitempty"`
+	// Code The storage region code
+	Code *string `json:"Code,omitempty"`
 
-	// Name The name of the storage region
+	// Continent The continent code: EU (Europe), NA (North America), AS (Asia), OC (Oceania), SA (South America) or AF (Africa)
+	Continent *string `json:"Continent,omitempty"`
+
+	// Endpoint The storage API endpoint, or null for SSD regions that cannot be selected as the main region
+	Endpoint *string `json:"Endpoint,omitempty"`
+
+	// IsMainRegionSupported Whether the region can be selected as the main region for this storage tier
+	IsMainRegionSupported *bool `json:"IsMainRegionSupported,omitempty"`
+
+	// IsS3Supported Supports S3 replication; main-region use also requires IsMainRegionSupported
+	IsS3Supported *bool `json:"IsS3Supported,omitempty"`
+
+	// Latitude The approximate latitude of the storage region in decimal degrees
+	Latitude *float64 `json:"Latitude,omitempty"`
+
+	// Longitude The approximate longitude of the storage region in decimal degrees
+	Longitude *float64 `json:"Longitude,omitempty"`
+
+	// Name The display name of the storage region
 	Name *string `json:"Name,omitempty"`
 
-	// Url The storage endpoint URL for this region
-	Url *string `json:"Url,omitempty"`
+	// PricePerGigabyte The standard storage price in USD per GB per month, before discounts
+	PricePerGigabyte *float64 `json:"PricePerGigabyte,omitempty"`
+
+	// S3Endpoint The S3 API endpoint, or null when S3 compatibility is not supported or the region cannot be selected as the main region
+	S3Endpoint *string `json:"S3Endpoint,omitempty"`
+
+	// Tier The storage tier: 0 for Standard (HDD), 1 for Edge (SSD)
+	Tier *int32 `json:"Tier,omitempty"`
 }
 
 // StorageZoneEgressStatisticsModel defines model for StorageZoneEgressStatisticsModel.
@@ -5507,7 +5535,10 @@ type VideoLibraryModel struct {
 	JitEncodingEnabled *bool `json:"JitEncodingEnabled,omitempty"`
 
 	// KeepOriginalFiles Determines if the original video files should be stored after encoding
-	KeepOriginalFiles             *bool    `json:"KeepOriginalFiles,omitempty"`
+	KeepOriginalFiles *bool `json:"KeepOriginalFiles,omitempty"`
+
+	// LiveStreamCount The total number of live streams contained by the video library
+	LiveStreamCount               *int64   `json:"LiveStreamCount,omitempty"`
 	MonthlyChargesEnterpriseDrm   *float64 `json:"MonthlyChargesEnterpriseDrm,omitempty"`
 	MonthlyChargesPremiumEncoding *float64 `json:"MonthlyChargesPremiumEncoding,omitempty"`
 	MonthlyChargesTranscribing    *float64 `json:"MonthlyChargesTranscribing,omitempty"`
@@ -5558,6 +5589,9 @@ type VideoLibraryModel struct {
 
 	// StorageZoneId The ID of the connected underlying storage zone
 	StorageZoneId *int64 `json:"StorageZoneId,omitempty"`
+
+	// TotalCount The total number of items contained by the video library
+	TotalCount *int64 `json:"TotalCount,omitempty"`
 
 	// TrafficUsage The amount of traffic usage this month
 	TrafficUsage *int64 `json:"TrafficUsage,omitempty"`
@@ -11195,10 +11229,10 @@ type ClientInterface interface {
 	// Corresponds with POST /storagezone/checkavailability (the `StorageZonePublicCheckAvailability` operationId).
 	StorageZonePublicCheckAvailability(ctx context.Context, body StorageZonePublicCheckAvailabilityJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetStoragezoneRegionsEndpointGetStorageZoneRegions Get Storage Zone Regions
+	// StorageZonePublicGetStorageZoneRegions Get Storage Zone Regions
 	//
-	// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
-	GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
+	StorageZonePublicGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// StorageZonePublicResetReadOnlyPassword Reset Read-Only Password
 	//
@@ -13347,11 +13381,11 @@ func (c *Client) StorageZonePublicCheckAvailability(ctx context.Context, body St
 	return c.Client.Do(req)
 }
 
-// GetStoragezoneRegionsEndpointGetStorageZoneRegions Get Storage Zone Regions
+// StorageZonePublicGetStorageZoneRegions Get Storage Zone Regions
 //
-// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
-func (c *Client) GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest(c.Server)
+// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
+func (c *Client) StorageZonePublicGetStorageZoneRegions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStorageZonePublicGetStorageZoneRegionsRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -18126,8 +18160,8 @@ func NewStorageZonePublicCheckAvailabilityRequestWithBody(server string, content
 	return req, nil
 }
 
-// NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest constructs an http.Request for the GetStoragezoneRegionsEndpointGetStorageZoneRegions method
-func NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest(server string) (*http.Request, error) {
+// NewStorageZonePublicGetStorageZoneRegionsRequest constructs an http.Request for the StorageZonePublicGetStorageZoneRegions method
+func NewStorageZonePublicGetStorageZoneRegionsRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -20514,12 +20548,12 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /storagezone/checkavailability (the `StorageZonePublicCheckAvailability` operationId).
 	StorageZonePublicCheckAvailabilityWithResponse(ctx context.Context, body StorageZonePublicCheckAvailabilityJSONRequestBody, reqEditors ...RequestEditorFn) (*StorageZonePublicCheckAvailabilityResponse, error)
 
-	// GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse Get Storage Zone Regions
+	// StorageZonePublicGetStorageZoneRegionsWithResponse Get Storage Zone Regions
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
-	GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error)
+	// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
+	StorageZonePublicGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*StorageZonePublicGetStorageZoneRegionsResponse, error)
 
 	// StorageZonePublicResetReadOnlyPasswordWithResponse Reset Read-Only Password
 	//
@@ -21273,11 +21307,18 @@ type DnsZonePublicDeleteResponse struct {
 	HTTPResponse *http.Response
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *ApiErrorData
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ApiErrorData
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
 func (r DnsZonePublicDeleteResponse) GetJSON400() *ApiErrorData {
 	return r.JSON400
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DnsZonePublicDeleteResponse) GetJSON409() *ApiErrorData {
+	return r.JSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -21779,11 +21820,18 @@ type DnsZonePublicDeleteRecordResponse struct {
 	HTTPResponse *http.Response
 	// JSON400 the response for an HTTP 400 `application/json` response
 	JSON400 *ApiErrorData
+	// JSON409 the response for an HTTP 409 `application/json` response
+	JSON409 *ApiErrorData
 }
 
 // GetJSON400 returns the response for an HTTP 400 `application/json` response
 func (r DnsZonePublicDeleteRecordResponse) GetJSON400() *ApiErrorData {
 	return r.JSON400
+}
+
+// GetJSON409 returns the response for an HTTP 409 `application/json` response
+func (r DnsZonePublicDeleteRecordResponse) GetJSON409() *ApiErrorData {
+	return r.JSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -24245,7 +24293,7 @@ func (r StorageZonePublicCheckAvailabilityResponse) ContentType() string {
 	return ""
 }
 
-type GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse struct {
+type StorageZonePublicGetStorageZoneRegionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -24253,17 +24301,17 @@ type GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) GetJSON200() *[]StorageRegionModel {
+func (r StorageZonePublicGetStorageZoneRegionsResponse) GetJSON200() *[]StorageRegionModel {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) GetBody() []byte {
+func (r StorageZonePublicGetStorageZoneRegionsResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) Status() string {
+func (r StorageZonePublicGetStorageZoneRegionsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -24271,7 +24319,7 @@ func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) Status() str
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) StatusCode() int {
+func (r StorageZonePublicGetStorageZoneRegionsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -24279,7 +24327,7 @@ func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) StatusCode()
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse) ContentType() string {
+func (r StorageZonePublicGetStorageZoneRegionsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -27043,17 +27091,17 @@ func (c *ClientWithResponses) StorageZonePublicCheckAvailabilityWithResponse(ctx
 	return ParseStorageZonePublicCheckAvailabilityResponse(rsp)
 }
 
-// GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse Get Storage Zone Regions
+// StorageZonePublicGetStorageZoneRegionsWithResponse Get Storage Zone Regions
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /storagezone/regions (the `GetStoragezoneRegionsEndpointGetStorageZoneRegions` operationId).
-func (c *ClientWithResponses) GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error) {
-	rsp, err := c.GetStoragezoneRegionsEndpointGetStorageZoneRegions(ctx, reqEditors...)
+// Corresponds with GET /storagezone/regions (the `StorageZonePublicGetStorageZoneRegions` operationId).
+func (c *ClientWithResponses) StorageZonePublicGetStorageZoneRegionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*StorageZonePublicGetStorageZoneRegionsResponse, error) {
+	rsp, err := c.StorageZonePublicGetStorageZoneRegions(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse(rsp)
+	return ParseStorageZonePublicGetStorageZoneRegionsResponse(rsp)
 }
 
 // StorageZonePublicResetReadOnlyPasswordWithResponse Reset Read-Only Password
@@ -27943,6 +27991,13 @@ func ParseDnsZonePublicDeleteResponse(rsp *http.Response) (*DnsZonePublicDeleteR
 	case rsp.StatusCode == 404:
 		break // No content-type
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
 	case rsp.StatusCode == 500:
 		break // No content-type
 
@@ -28367,6 +28422,13 @@ func ParseDnsZonePublicDeleteRecordResponse(rsp *http.Response) (*DnsZonePublicD
 
 	case rsp.StatusCode == 404:
 		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case rsp.StatusCode == 500:
 		break // No content-type
@@ -30389,15 +30451,15 @@ func ParseStorageZonePublicCheckAvailabilityResponse(rsp *http.Response) (*Stora
 	return response, nil
 }
 
-// ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse parses an HTTP response from a GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse call
-func ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse(rsp *http.Response) (*GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse, error) {
+// ParseStorageZonePublicGetStorageZoneRegionsResponse parses an HTTP response from a StorageZonePublicGetStorageZoneRegionsWithResponse call
+func ParseStorageZonePublicGetStorageZoneRegionsResponse(rsp *http.Response) (*StorageZonePublicGetStorageZoneRegionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse{
+	response := &StorageZonePublicGetStorageZoneRegionsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -30409,9 +30471,6 @@ func ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse(rsp *http.R
 			return nil, err
 		}
 		response.JSON200 = &dest
-
-	case rsp.StatusCode == 401:
-		break // No content-type
 
 	case rsp.StatusCode == 500:
 		break // No content-type

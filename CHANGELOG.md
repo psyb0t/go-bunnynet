@@ -2,6 +2,17 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.3.0, 2026-10-21
+
+- The Bunny.net spec went back to the `StorageZonePublic` operation ID for `GET /storagezone/regions`. `(*Client).GetStoragezoneRegionsEndpointGetStorageZoneRegions` and `(*ClientWithResponses).GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse` are removed. Use `(*Client).StorageZonePublicGetStorageZoneRegions` and `(*ClientWithResponses).StorageZonePublicGetStorageZoneRegionsWithResponse`.
+- The matching request builder, response type and parse function are renamed: `NewGetStoragezoneRegionsEndpointGetStorageZoneRegionsRequest` is now `NewStorageZonePublicGetStorageZoneRegionsRequest`, `GetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse` is now `StorageZonePublicGetStorageZoneRegionsResponse`, and `ParseGetStoragezoneRegionsEndpointGetStorageZoneRegionsResponse` is now `ParseStorageZonePublicGetStorageZoneRegionsResponse`. `ClientInterface` and `ClientWithResponsesInterface` change the same way.
+- `StorageRegionModel` no longer has `Id` or `Url`. It now has `Code`, `Continent`, `Endpoint`, `IsMainRegionSupported`, `IsS3Supported`, `Latitude`, `Longitude`, `PricePerGigabyte`, `S3Endpoint` and `Tier`.
+- The storage regions response no longer has a 401 case with no content type.
+- `DnsZonePublicDeleteResponse` and `DnsZonePublicDeleteRecordResponse` now have `JSON409` and `GetJSON409`.
+- Added the `OptimizerHtmlToMarkdownTypePrerendered` constant.
+- `VideoLibraryModel` has new fields `LiveStreamCount` and `TotalCount`.
+- The development image in `Dockerfile.dev` moves to Go 1.26.10, which fixes GO-2026-6809 in `crypto/x509` reported by `make sec`.
+
 ## v0.2.0, 2026-10-19
 
 - `(*Client).StorageZonePublicGetStorageZoneRegions` and `(*ClientWithResponses).StorageZonePublicGetStorageZoneRegionsWithResponse` are gone. Use `(*Client).GetStoragezoneRegionsEndpointGetStorageZoneRegions` and `(*ClientWithResponses).GetStoragezoneRegionsEndpointGetStorageZoneRegionsWithResponse` instead, matching a new operation ID in the Bunny.net spec for `GET /storagezone/regions`.
