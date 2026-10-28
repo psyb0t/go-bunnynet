@@ -1,6 +1,6 @@
 {
   "name": "go-bunnynet",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Unofficial Go client for the Bunny.net core API: CDN, DNS, storage and video library configuration, statistics, load balancers and billing.",
   "author": {
     "name": "psyb0t",
