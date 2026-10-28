@@ -2,6 +2,12 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.3.4, 2026-10-28
+
+- Documentation only. The doc comments on `VideoLibraryModel` and `VideoLibraryUpdateModel` go back to the shorter upstream wording and no longer describe how DRM interacts with early play and original files.
+- `VideoLibraryModel.EnableDRM`, `AllowEarlyPlay` and `ExposeOriginals`: the notes that `AllowEarlyPlay` and `ExposeOriginals` are always false while `EnableDRM` is true are removed.
+- `VideoLibraryUpdateModel.EnableDRM`, `AllowEarlyPlay` and `ExposeOriginals`: the notes that `EnableDRM` cannot be true together with `AllowEarlyPlay` or `ExposeOriginals` are removed. The note that enabling `AllowEarlyPlay` enables `ExposeOriginals` stays in shorter form.
+
 ## v0.3.3, 2026-10-28
 
 - Updated Semgrep in the development image to 1.182.1 and refreshed its locked dependencies. certifi 2026.10.23 drops the emSign root CAs whose intermediate keys were compromised (GHSA-6q48-6c7w-9gw2).

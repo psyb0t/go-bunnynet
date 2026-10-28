@@ -5401,7 +5401,7 @@ type VideoLibraryModel struct {
 	// AllowDirectPlay Determines direct play URLs are enabled for the library
 	AllowDirectPlay *bool `json:"AllowDirectPlay,omitempty"`
 
-	// AllowEarlyPlay Determines if the Early-Play feature is enabled. Always false while EnableDRM is true.
+	// AllowEarlyPlay Determines if the Early-Play feature is enabled
 	AllowEarlyPlay *bool `json:"AllowEarlyPlay,omitempty"`
 
 	// AllowedReferrers The list of allowed referrer domains allowed to access the library
@@ -5481,7 +5481,7 @@ type VideoLibraryModel struct {
 	// EnableContentTagging Determines if content tagging should be enabled for this library.
 	EnableContentTagging *bool `json:"EnableContentTagging,omitempty"`
 
-	// EnableDRM Determines if MediaCage DRM is enabled. While true, AllowEarlyPlay and ExposeOriginals are always false.
+	// EnableDRM Determines if the DRM is enabled
 	EnableDRM *bool `json:"EnableDRM,omitempty"`
 
 	// EnableMP4Fallback Determines if the MP4 fallback feature is enabled
@@ -5511,7 +5511,7 @@ type VideoLibraryModel struct {
 	// EncodingTier Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
 	EncodingTier *VideoLibraryModel_EncodingTier `json:"EncodingTier,omitempty"`
 
-	// ExposeOriginals Marks whether original video files are exposed via CDN. Always false while EnableDRM is true; original files are not protected by DRM.
+	// ExposeOriginals Marks whether original video files should be exposed via CDN.
 	ExposeOriginals *bool `json:"ExposeOriginals,omitempty"`
 
 	// ExposeVideoMetadata Marks whether video metadata in form of schema meta tags and LD+JSON should be exposed.
@@ -5673,7 +5673,7 @@ type VideoLibraryUpdateModel struct {
 	// AllowDirectPlay (Optional) Determines if direct play URLs should be enabled for the library
 	AllowDirectPlay *bool `json:"AllowDirectPlay,omitempty"`
 
-	// AllowEarlyPlay (Optional) Determines if the Early-Play feature should be enabled. Setting it to true also sets ExposeOriginals to true. Cannot be true while EnableDRM is true, and EnableDRM cannot be set to true while this is true, because Early Play serves the original file, which is not protected by DRM.
+	// AllowEarlyPlay (Optional) Determines if the Early-Play feature should be enabled. Enabling this will enable Expose Originals.
 	AllowEarlyPlay *bool `json:"AllowEarlyPlay,omitempty"`
 
 	// AppleFairPlayDrm (Optional) Configure Apple FairPlay DRM. Works only if Enterprise DRM is set up.
@@ -5730,7 +5730,7 @@ type VideoLibraryUpdateModel struct {
 	// EnableContentTagging (Optional) Determines if content tagging should be enabled for this library.
 	EnableContentTagging *bool `json:"EnableContentTagging,omitempty"`
 
-	// EnableDRM (Optional) Determines if MediaCage DRM should be enabled for this library. Cannot be set to true while AllowEarlyPlay or ExposeOriginals is true; set them to false first or in the same request, because original files are not protected by DRM.
+	// EnableDRM (Optional) Determines if MediaCage DRM should be enabled for this library
 	EnableDRM *bool `json:"EnableDRM,omitempty"`
 
 	// EnableMP4Fallback (Optional) Determines if MP4 fallback should be enabled for this library.
@@ -5766,7 +5766,7 @@ type VideoLibraryUpdateModel struct {
 	// EncodingTier (Optional) Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
 	EncodingTier *VideoLibraryUpdateModel_EncodingTier `json:"EncodingTier,omitempty"`
 
-	// ExposeOriginals (Optional) Marks whether original video files should be exposed via CDN. Original files are not protected by DRM, so this cannot be true while EnableDRM is true, and EnableDRM cannot be set to true while this is true. Setting AllowEarlyPlay to true sets this to true.
+	// ExposeOriginals (Optional) Marks whether original video files should be exposed via CDN. Originals are not protected by DRM. Enabling Early-Play will enable this.
 	ExposeOriginals *bool `json:"ExposeOriginals,omitempty"`
 
 	// ExposeVideoMetadata (Optional) Marks whether video metadata in form of schema meta tags and LD+JSON should be exposed.
