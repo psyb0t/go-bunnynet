@@ -5401,7 +5401,7 @@ type VideoLibraryModel struct {
 	// AllowDirectPlay Determines direct play URLs are enabled for the library
 	AllowDirectPlay *bool `json:"AllowDirectPlay,omitempty"`
 
-	// AllowEarlyPlay Determines if the Early-Play feature is enabled
+	// AllowEarlyPlay Determines if the Early-Play feature is enabled. Always false while EnableDRM is true.
 	AllowEarlyPlay *bool `json:"AllowEarlyPlay,omitempty"`
 
 	// AllowedReferrers The list of allowed referrer domains allowed to access the library
@@ -5451,7 +5451,7 @@ type VideoLibraryModel struct {
 	// CaptionsFontSize The captions display font size
 	CaptionsFontSize *int32 `json:"CaptionsFontSize,omitempty"`
 
-	// Controls The list of controls on the video player.
+	// Controls The comma-separated list of controls displayed in the video player. Possible values: play-large, play, progress, current-time, duration, mute, volume, captions, settings, pip, airplay, fullscreen, rewind, fast-forward, and chromecast. Empty when all player UI controls are removed.
 	Controls *string `json:"Controls,omitempty"`
 
 	// CustomHTML The custom HTMl that is added into the head of the HTML player.
@@ -5481,7 +5481,7 @@ type VideoLibraryModel struct {
 	// EnableContentTagging Determines if content tagging should be enabled for this library.
 	EnableContentTagging *bool `json:"EnableContentTagging,omitempty"`
 
-	// EnableDRM Determines if the DRM is enabled
+	// EnableDRM Determines if MediaCage DRM is enabled. While true, AllowEarlyPlay and ExposeOriginals are always false.
 	EnableDRM *bool `json:"EnableDRM,omitempty"`
 
 	// EnableMP4Fallback Determines if the MP4 fallback feature is enabled
@@ -5511,7 +5511,7 @@ type VideoLibraryModel struct {
 	// EncodingTier Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
 	EncodingTier *VideoLibraryModel_EncodingTier `json:"EncodingTier,omitempty"`
 
-	// ExposeOriginals Marks whether original video files should be exposed via CDN.
+	// ExposeOriginals Marks whether original video files are exposed via CDN. Always false while EnableDRM is true; original files are not protected by DRM.
 	ExposeOriginals *bool `json:"ExposeOriginals,omitempty"`
 
 	// ExposeVideoMetadata Marks whether video metadata in form of schema meta tags and LD+JSON should be exposed.
@@ -5673,7 +5673,7 @@ type VideoLibraryUpdateModel struct {
 	// AllowDirectPlay (Optional) Determines if direct play URLs should be enabled for the library
 	AllowDirectPlay *bool `json:"AllowDirectPlay,omitempty"`
 
-	// AllowEarlyPlay (Optional) Determines if the Early-Play feature should be enabled. Enabling this will enable Expose Originals.
+	// AllowEarlyPlay (Optional) Determines if the Early-Play feature should be enabled. Setting it to true also sets ExposeOriginals to true. Cannot be true while EnableDRM is true, and EnableDRM cannot be set to true while this is true, because Early Play serves the original file, which is not protected by DRM.
 	AllowEarlyPlay *bool `json:"AllowEarlyPlay,omitempty"`
 
 	// AppleFairPlayDrm (Optional) Configure Apple FairPlay DRM. Works only if Enterprise DRM is set up.
@@ -5712,7 +5712,7 @@ type VideoLibraryUpdateModel struct {
 	// CaptionsFontSize (Optional) Sets the captions display font size
 	CaptionsFontSize *int32 `json:"CaptionsFontSize,omitempty"`
 
-	// Controls (Optional) The comma separated list of controls that will be displayed in the video player. Possible values: play-large, play, progress, current-time, mute, volume, captions, settings, pip, airplay, fullscreen.
+	// Controls (Optional) A comma-separated list of controls to display in the video player. Possible values: play-large, play, progress, current-time, duration, mute, volume, captions, settings, pip, airplay, fullscreen, rewind, fast-forward, and chromecast. Set Controls to 0 to remove all player UI controls.
 	Controls *string `json:"Controls,omitempty"`
 
 	// CustomHTML (Optional) Sets the player custom HTML code
@@ -5730,7 +5730,7 @@ type VideoLibraryUpdateModel struct {
 	// EnableContentTagging (Optional) Determines if content tagging should be enabled for this library.
 	EnableContentTagging *bool `json:"EnableContentTagging,omitempty"`
 
-	// EnableDRM (Optional) Determines if MediaCage DRM should be enabled for this library
+	// EnableDRM (Optional) Determines if MediaCage DRM should be enabled for this library. Cannot be set to true while AllowEarlyPlay or ExposeOriginals is true; set them to false first or in the same request, because original files are not protected by DRM.
 	EnableDRM *bool `json:"EnableDRM,omitempty"`
 
 	// EnableMP4Fallback (Optional) Determines if MP4 fallback should be enabled for this library.
@@ -5766,7 +5766,7 @@ type VideoLibraryUpdateModel struct {
 	// EncodingTier (Optional) Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
 	EncodingTier *VideoLibraryUpdateModel_EncodingTier `json:"EncodingTier,omitempty"`
 
-	// ExposeOriginals (Optional) Marks whether original video files should be exposed via CDN. Originals are not protected by DRM. Enabling Early-Play will enable this.
+	// ExposeOriginals (Optional) Marks whether original video files should be exposed via CDN. Original files are not protected by DRM, so this cannot be true while EnableDRM is true, and EnableDRM cannot be set to true while this is true. Setting AllowEarlyPlay to true sets this to true.
 	ExposeOriginals *bool `json:"ExposeOriginals,omitempty"`
 
 	// ExposeVideoMetadata (Optional) Marks whether video metadata in form of schema meta tags and LD+JSON should be exposed.
@@ -11385,6 +11385,11 @@ type ClientInterface interface {
 	// Corresponds with GET /videolibrary/{id}/drm/statistics (the `GetDrmStatisticsEndpointStatistics` operationId).
 	GetDrmStatisticsEndpointStatistics(ctx context.Context, id int64, params *GetDrmStatisticsEndpointStatisticsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey Reset Live Auto Create Stream Key
+	//
+	// Corresponds with POST /videolibrary/{id}/live/resetAutoCreateStreamKey (the `ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` operationId).
+	ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteLiveThumbnailEndpointDeleteThumbnail Delete Live Thumbnail
 	//
 	// Corresponds with DELETE /videolibrary/{id}/live/thumbnail (the `DeleteLiveThumbnailEndpointDeleteThumbnail` operationId).
@@ -11442,6 +11447,11 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /videolibrary/{id}/resetReadOnlyApiKey (the `ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey` operationId).
 	ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret Reset Webhook Signing Secret
+	//
+	// Corresponds with POST /videolibrary/{id}/resetWebhookSigningSecret (the `ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret` operationId).
+	ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetTranscribingStatisticsEndpointStatistics Get Video Library Transcribing Statistics
 	//
@@ -13797,6 +13807,21 @@ func (c *Client) GetDrmStatisticsEndpointStatistics(ctx context.Context, id int6
 	return c.Client.Do(req)
 }
 
+// ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey Reset Live Auto Create Stream Key
+//
+// Corresponds with POST /videolibrary/{id}/live/resetAutoCreateStreamKey (the `ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` operationId).
+func (c *Client) ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteLiveThumbnailEndpointDeleteThumbnail Delete Live Thumbnail
 //
 // Corresponds with DELETE /videolibrary/{id}/live/thumbnail (the `DeleteLiveThumbnailEndpointDeleteThumbnail` operationId).
@@ -13945,6 +13970,21 @@ func (c *Client) ResetVideoLibraryApiKeyEndpointResetVideoLibraryApiKey(ctx cont
 // Corresponds with POST /videolibrary/{id}/resetReadOnlyApiKey (the `ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey` operationId).
 func (c *Client) ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret Reset Webhook Signing Secret
+//
+// Corresponds with POST /videolibrary/{id}/resetWebhookSigningSecret (the `ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret` operationId).
+func (c *Client) ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -19239,6 +19279,40 @@ func NewGetDrmStatisticsEndpointStatisticsRequest(server string, id int64, param
 	return req, nil
 }
 
+// NewResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyRequest constructs an http.Request for the ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey method
+func NewResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/videolibrary/%s/live/resetAutoCreateStreamKey", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewDeleteLiveThumbnailEndpointDeleteThumbnailRequest constructs an http.Request for the DeleteLiveThumbnailEndpointDeleteThumbnail method
 func NewDeleteLiveThumbnailEndpointDeleteThumbnailRequest(server string, id int64) (*http.Request, error) {
 	var err error
@@ -19520,6 +19594,40 @@ func NewResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyRe
 	}
 
 	operationPath := fmt.Sprintf("/videolibrary/%s/resetReadOnlyApiKey", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretRequest constructs an http.Request for the ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret method
+func NewResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretRequest(server string, id int64) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/videolibrary/%s/resetWebhookSigningSecret", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -20732,6 +20840,13 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /videolibrary/{id}/drm/statistics (the `GetDrmStatisticsEndpointStatistics` operationId).
 	GetDrmStatisticsEndpointStatisticsWithResponse(ctx context.Context, id int64, params *GetDrmStatisticsEndpointStatisticsParams, reqEditors ...RequestEditorFn) (*GetDrmStatisticsEndpointStatisticsResponse, error)
 
+	// ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse Reset Live Auto Create Stream Key
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /videolibrary/{id}/live/resetAutoCreateStreamKey (the `ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` operationId).
+	ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse, error)
+
 	// DeleteLiveThumbnailEndpointDeleteThumbnailWithResponse Delete Live Thumbnail
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -20801,6 +20916,13 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /videolibrary/{id}/resetReadOnlyApiKey (the `ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey` operationId).
 	ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyResponse, error)
+
+	// ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse Reset Webhook Signing Secret
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /videolibrary/{id}/resetWebhookSigningSecret (the `ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret` operationId).
+	ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse, error)
 
 	// GetTranscribingStatisticsEndpointStatisticsWithResponse Get Video Library Transcribing Statistics
 	//
@@ -25162,6 +25284,61 @@ func (r GetDrmStatisticsEndpointStatisticsResponse) ContentType() string {
 	return ""
 }
 
+type ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *ApiErrorData
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ApiErrorData
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ApiErrorData
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) GetJSON401() *ApiErrorData {
+	return r.JSON401
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) GetJSON403() *ApiErrorData {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) GetJSON404() *ApiErrorData {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteLiveThumbnailEndpointDeleteThumbnailResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -25442,6 +25619,61 @@ func (r ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyRe
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *ApiErrorData
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *ApiErrorData
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *ApiErrorData
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) GetJSON401() *ApiErrorData {
+	return r.JSON401
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) GetJSON403() *ApiErrorData {
+	return r.JSON403
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) GetJSON404() *ApiErrorData {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -27431,6 +27663,19 @@ func (c *ClientWithResponses) GetDrmStatisticsEndpointStatisticsWithResponse(ctx
 	return ParseGetDrmStatisticsEndpointStatisticsResponse(rsp)
 }
 
+// ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse Reset Live Auto Create Stream Key
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /videolibrary/{id}/live/resetAutoCreateStreamKey (the `ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` operationId).
+func (c *ClientWithResponses) ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse, error) {
+	rsp, err := c.ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse(rsp)
+}
+
 // DeleteLiveThumbnailEndpointDeleteThumbnailWithResponse Delete Live Thumbnail
 //
 // Returns a wrapper object for the known response body format(s).
@@ -27559,6 +27804,19 @@ func (c *ClientWithResponses) ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoL
 		return nil, err
 	}
 	return ParseResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyResponse(rsp)
+}
+
+// ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse Reset Webhook Signing Secret
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /videolibrary/{id}/resetWebhookSigningSecret (the `ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret` operationId).
+func (c *ClientWithResponses) ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse(ctx context.Context, id int64, reqEditors ...RequestEditorFn) (*ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse, error) {
+	rsp, err := c.ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse(rsp)
 }
 
 // GetTranscribingStatisticsEndpointStatisticsWithResponse Get Video Library Transcribing Statistics
@@ -31134,6 +31392,52 @@ func ParseGetDrmStatisticsEndpointStatisticsResponse(rsp *http.Response) (*GetDr
 	return response, nil
 }
 
+// ParseResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse parses an HTTP response from a ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse call
+func ParseResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse(rsp *http.Response) (*ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case rsp.StatusCode == 500:
+		break // No content-type
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteLiveThumbnailEndpointDeleteThumbnailResponse parses an HTTP response from a DeleteLiveThumbnailEndpointDeleteThumbnailWithResponse call
 func ParseDeleteLiveThumbnailEndpointDeleteThumbnailResponse(rsp *http.Response) (*DeleteLiveThumbnailEndpointDeleteThumbnailResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -31301,6 +31605,52 @@ func ParseResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKey
 	response := &ResetVideoLibraryReadOnlyApiKeyEndpointResetVideoLibraryReadOnlyApiKeyResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse parses an HTTP response from a ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse call
+func ParseResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse(rsp *http.Response) (*ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest ApiErrorData
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case rsp.StatusCode == 500:
+		break // No content-type
+
 	}
 
 	return response, nil

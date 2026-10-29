@@ -2,6 +2,14 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.3.5, 2026-10-29
+
+- Added `Client.ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` and `ClientWithResponses.ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse`. They send `POST /videolibrary/{id}/live/resetAutoCreateStreamKey`.
+- Added `Client.ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecret` and `ClientWithResponses.ResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretWithResponse`. They send `POST /videolibrary/{id}/resetWebhookSigningSecret`.
+- Added the matching request builders `NewResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyRequest` and `NewResetVideoLibraryWebhookSigningSecretEndpointResetVideoLibraryWebhookSigningSecretRequest`, the response parsers, and the `...Response` types for both operations.
+- `ClientInterface` and `ClientWithResponsesInterface` gain the four new methods. Code that implements or mocks these interfaces must add them.
+- Documentation only: the doc comments on `AllowEarlyPlay`, `Controls`, `EnableDRM` and `ExposeOriginals` in the video library models changed wording.
+
 ## v0.3.4, 2026-10-28
 
 - Documentation only. The doc comments on `VideoLibraryModel` and `VideoLibraryUpdateModel` go back to the shorter upstream wording and no longer describe how DRM interacts with early play and original files.
