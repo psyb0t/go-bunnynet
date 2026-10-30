@@ -2,6 +2,17 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.4.0, 2026-10-30
+
+- Several model fields now use generated union wrapper types instead of the plain enum types. Code that reads or assigns these fields must change. The wrappers have `As...`, `From...` and `Merge...` methods for the old enum type.
+- `DnsRecordModel`: `Type` is now `*DnsRecordModel_Type`, `MonitorType` is `*DnsRecordModel_MonitorType`, `SmartRoutingType` is `*DnsRecordModel_SmartRoutingType` and `AccelerationStatus` is `*DnsRecordModel_AccelerationStatus`. `MonitorStatus` is now `*DnsRecordModel_MonitorStatus`.
+- `DnsZoneRecordScanJobResponse.Status` is now `*DnsZoneRecordScanJobResponse_Status`. `DnsZoneRecordScanTriggerResponse.Status` is now `*DnsZoneRecordScanTriggerResponse_Status`.
+- `EdgeRuleV2ActionModel.ActionType` is now `*EdgeRuleV2ActionModel_ActionType`. `PriceEstimationModel.PricingType` is now `*PriceEstimationModel_PricingType`.
+- `PullZoneModel`: `LogFormat`, `LogForwardingFormat` and `ShieldDDosProtectionType` now use `PullZoneModel_LogFormat`, `PullZoneModel_LogForwardingFormat` and `PullZoneModel_ShieldDDosProtectionType`.
+- `PrivateKeyUpdateModel.KeyType` is now `PrivateKeyUpdateModel_KeyType` instead of `PrivateKeyType`. `PrivateKeyUpdateModel` is no longer comparable with `==`.
+- The doc comment on `PrivateKeyType` now says `ECDSA` instead of `Ecdsa`.
+- Added the union wrapper types listed above, each with `As...`, `From...` and `Merge...` methods.
+
 ## v0.3.5, 2026-10-29
 
 - Added `Client.ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKey` and `ClientWithResponses.ResetLiveAutoCreateStreamKeyEndpointResetLiveAutoCreateStreamKeyWithResponse`. They send `POST /videolibrary/{id}/live/resetAutoCreateStreamKey`.

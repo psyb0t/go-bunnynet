@@ -1457,31 +1457,91 @@ type AddDnsRecordModel struct {
 	GeolocationLatitude   *float64                              `json:"GeolocationLatitude,omitempty"`
 	GeolocationLongitude  *float64                              `json:"GeolocationLongitude,omitempty"`
 	LatencyZone           *string                               `json:"LatencyZone,omitempty"`
-	MonitorType           *AddDnsRecordModel_MonitorType        `json:"MonitorType,omitempty"`
-	Name                  *string                               `json:"Name,omitempty"`
-	Port                  *int32                                `json:"Port,omitempty"`
-	Priority              *int32                                `json:"Priority,omitempty"`
-	PullZoneId            *int64                                `json:"PullZoneId,omitempty"`
-	ScriptId              *int64                                `json:"ScriptId,omitempty"`
-	SmartRoutingType      *AddDnsRecordModel_SmartRoutingType   `json:"SmartRoutingType,omitempty"`
-	Tag                   *string                               `json:"Tag,omitempty"`
-	Ttl                   *int32                                `json:"Ttl,omitempty"`
-	Type                  *AddDnsRecordModel_Type               `json:"Type,omitempty"`
-	Value                 *string                               `json:"Value,omitempty"`
-	Weight                *int32                                `json:"Weight,omitempty"`
+
+	// MonitorType 0 = None
+	// 1 = Ping
+	// 2 = HTTP
+	// 3 = Monitor
+	MonitorType *AddDnsRecordModel_MonitorType `json:"MonitorType,omitempty"`
+	Name        *string                        `json:"Name,omitempty"`
+	Port        *int32                         `json:"Port,omitempty"`
+	Priority    *int32                         `json:"Priority,omitempty"`
+	PullZoneId  *int64                         `json:"PullZoneId,omitempty"`
+	ScriptId    *int64                         `json:"ScriptId,omitempty"`
+
+	// SmartRoutingType 0 = None
+	// 1 = Latency
+	// 2 = Geolocation
+	SmartRoutingType *AddDnsRecordModel_SmartRoutingType `json:"SmartRoutingType,omitempty"`
+	Tag              *string                             `json:"Tag,omitempty"`
+	Ttl              *int32                              `json:"Ttl,omitempty"`
+
+	// Type <details>
+	// <summary>Show all 16 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | A |
+	// | `1` | AAAA |
+	// | `2` | CNAME |
+	// | `3` | TXT |
+	// | `4` | MX |
+	// | `5` | Redirect |
+	// | `6` | Flatten |
+	// | `7` | Pull Zone |
+	// | `8` | SRV |
+	// | `9` | CAA |
+	// | `10` | PTR |
+	// | `11` | Script |
+	// | `12` | NS |
+	// | `13` | SVCB |
+	// | `14` | HTTPS |
+	// | `15` | TLSA |
+	//
+	// </details>
+	Type   *AddDnsRecordModel_Type `json:"Type,omitempty"`
+	Value  *string                 `json:"Value,omitempty"`
+	Weight *int32                  `json:"Weight,omitempty"`
 }
 
-// AddDnsRecordModel_MonitorType defines model for AddDnsRecordModel.MonitorType.
+// AddDnsRecordModel_MonitorType 0 = None
+// 1 = Ping
+// 2 = HTTP
+// 3 = Monitor
 type AddDnsRecordModel_MonitorType struct {
 	union json.RawMessage
 }
 
-// AddDnsRecordModel_SmartRoutingType defines model for AddDnsRecordModel.SmartRoutingType.
+// AddDnsRecordModel_SmartRoutingType 0 = None
+// 1 = Latency
+// 2 = Geolocation
 type AddDnsRecordModel_SmartRoutingType struct {
 	union json.RawMessage
 }
 
-// AddDnsRecordModel_Type defines model for AddDnsRecordModel.Type.
+// AddDnsRecordModel_Type <details>
+// <summary>Show all 16 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | A |
+// | `1` | AAAA |
+// | `2` | CNAME |
+// | `3` | TXT |
+// | `4` | MX |
+// | `5` | Redirect |
+// | `6` | Flatten |
+// | `7` | Pull Zone |
+// | `8` | SRV |
+// | `9` | CAA |
+// | `10` | PTR |
+// | `11` | Script |
+// | `12` | NS |
+// | `13` | SVCB |
+// | `14` | HTTPS |
+// | `15` | TLSA |
+//
+// </details>
 type AddDnsRecordModel_Type struct {
 	union json.RawMessage
 }
@@ -1520,9 +1580,9 @@ type AppleFairPlayDrmUpdateModel struct {
 	Enabled *bool `json:"Enabled,omitempty"`
 }
 
-// AppliedPricingType 0 = ListPrice
-// 1 = UserOverride
-// 2 = ResourceOverride
+// AppliedPricingType 0 = List Price
+// 1 = User Override
+// 2 = Resource Override
 type AppliedPricingType int
 
 // BillingAffiliateDetailsModel defines model for BillingAffiliateDetailsModel.
@@ -1871,22 +1931,40 @@ type BillingRecordModel struct {
 	Timestamp *time.Time `json:"Timestamp,omitempty"`
 
 	// Type The type of the billing record
+	//
+	// 0 = PayPal
+	// 1 = Crypto
+	// 2 = Credit Card
+	// 3 = Monthly Usage
+	// 4 = Refund
+	// 5 = Coupon Code
+	// 6 = Bank Transfer
+	// 7 = Affiliate Credits
 	Type *BillingRecordModel_Type `json:"Type,omitempty"`
 }
 
 // BillingRecordModel_Type The type of the billing record
+//
+// 0 = PayPal
+// 1 = Crypto
+// 2 = Credit Card
+// 3 = Monthly Usage
+// 4 = Refund
+// 5 = Coupon Code
+// 6 = Bank Transfer
+// 7 = Affiliate Credits
 type BillingRecordModel_Type struct {
 	union json.RawMessage
 }
 
 // BillingRecordType 0 = PayPal
 // 1 = Crypto
-// 2 = CreditCard
-// 3 = MonthlyUsage
+// 2 = Credit Card
+// 3 = Monthly Usage
 // 4 = Refund
-// 5 = CouponCode
-// 6 = BankTransfer
-// 7 = AffiliateCredits
+// 5 = Coupon Code
+// 6 = Bank Transfer
+// 7 = Affiliate Credits
 type BillingRecordType int
 
 // BillingSavedPaymentMethod defines model for BillingSavedPaymentMethod.
@@ -1917,8 +1995,8 @@ type BunnyAiImageBlueprintModel struct {
 }
 
 // CertificateProvisionType 0 = Unknown
-// 1 = Http01
-// 2 = Dns01
+// 1 = HTTP-01
+// 2 = DNS-01
 // 3 = Custom
 // 4 = Managed
 type CertificateProvisionType int
@@ -1953,7 +2031,7 @@ type DnsMonitoringStatus int
 
 // DnsMonitoringType 0 = None
 // 1 = Ping
-// 2 = Http
+// 2 = HTTP
 // 3 = Monitor
 type DnsMonitoringType int
 
@@ -1981,7 +2059,7 @@ type DnsRecordModel struct {
 	// 2 = Processing
 	// 3 = Completed
 	// 4 = Failed
-	AccelerationStatus    *AcceleratedStatus                    `json:"AccelerationStatus,omitempty"`
+	AccelerationStatus    *DnsRecordModel_AccelerationStatus    `json:"AccelerationStatus,omitempty"`
 	AutoSslIssuance       *bool                                 `json:"AutoSslIssuance,omitempty"`
 	Comment               *string                               `json:"Comment,omitempty"`
 	Disabled              *bool                                 `json:"Disabled,omitempty"`
@@ -1998,43 +2076,59 @@ type DnsRecordModel struct {
 	// MonitorStatus 0 = Unknown
 	// 1 = Online
 	// 2 = Offline
-	MonitorStatus *DnsMonitoringStatus `json:"MonitorStatus,omitempty"`
+	MonitorStatus *DnsRecordModel_MonitorStatus `json:"MonitorStatus,omitempty"`
 
 	// MonitorType 0 = None
 	// 1 = Ping
-	// 2 = Http
+	// 2 = HTTP
 	// 3 = Monitor
-	MonitorType *DnsMonitoringType `json:"MonitorType,omitempty"`
-	Name        *string            `json:"Name,omitempty"`
-	Port        *int32             `json:"Port,omitempty"`
-	Priority    *int32             `json:"Priority,omitempty"`
+	MonitorType *DnsRecordModel_MonitorType `json:"MonitorType,omitempty"`
+	Name        *string                     `json:"Name,omitempty"`
+	Port        *int32                      `json:"Port,omitempty"`
+	Priority    *int32                      `json:"Priority,omitempty"`
 
 	// SmartRoutingType 0 = None
 	// 1 = Latency
 	// 2 = Geolocation
-	SmartRoutingType *DnsSmartRoutingType `json:"SmartRoutingType,omitempty"`
-	Tag              *string              `json:"Tag,omitempty"`
-	Ttl              *int32               `json:"Ttl,omitempty"`
+	SmartRoutingType *DnsRecordModel_SmartRoutingType `json:"SmartRoutingType,omitempty"`
+	Tag              *string                          `json:"Tag,omitempty"`
+	Ttl              *int32                           `json:"Ttl,omitempty"`
 
-	// Type 0 = A
-	// 1 = AAAA
-	// 2 = CNAME
-	// 3 = TXT
-	// 4 = MX
-	// 5 = Redirect
-	// 6 = Flatten
-	// 7 = PullZone
-	// 8 = SRV
-	// 9 = CAA
-	// 10 = PTR
-	// 11 = Script
-	// 12 = NS
-	// 13 = SVCB
-	// 14 = HTTPS
-	// 15 = TLSA
-	Type   *DnsRecordTypes `json:"Type,omitempty"`
-	Value  *string         `json:"Value,omitempty"`
-	Weight *int32          `json:"Weight,omitempty"`
+	// Type <details>
+	// <summary>Show all 16 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | A |
+	// | `1` | AAAA |
+	// | `2` | CNAME |
+	// | `3` | TXT |
+	// | `4` | MX |
+	// | `5` | Redirect |
+	// | `6` | Flatten |
+	// | `7` | Pull Zone |
+	// | `8` | SRV |
+	// | `9` | CAA |
+	// | `10` | PTR |
+	// | `11` | Script |
+	// | `12` | NS |
+	// | `13` | SVCB |
+	// | `14` | HTTPS |
+	// | `15` | TLSA |
+	//
+	// </details>
+	Type   *DnsRecordModel_Type `json:"Type,omitempty"`
+	Value  *string              `json:"Value,omitempty"`
+	Weight *int32               `json:"Weight,omitempty"`
+}
+
+// DnsRecordModel_AccelerationStatus 0 = None
+// 1 = Pending
+// 2 = Processing
+// 3 = Completed
+// 4 = Failed
+type DnsRecordModel_AccelerationStatus struct {
+	union json.RawMessage
 }
 
 // DnsRecordModel_GeolocationInfo defines model for DnsRecordModel.GeolocationInfo.
@@ -2047,6 +2141,55 @@ type DnsRecordModel_IPGeoLocationInfo struct {
 	union json.RawMessage
 }
 
+// DnsRecordModel_MonitorStatus 0 = Unknown
+// 1 = Online
+// 2 = Offline
+type DnsRecordModel_MonitorStatus struct {
+	union json.RawMessage
+}
+
+// DnsRecordModel_MonitorType 0 = None
+// 1 = Ping
+// 2 = HTTP
+// 3 = Monitor
+type DnsRecordModel_MonitorType struct {
+	union json.RawMessage
+}
+
+// DnsRecordModel_SmartRoutingType 0 = None
+// 1 = Latency
+// 2 = Geolocation
+type DnsRecordModel_SmartRoutingType struct {
+	union json.RawMessage
+}
+
+// DnsRecordModel_Type <details>
+// <summary>Show all 16 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | A |
+// | `1` | AAAA |
+// | `2` | CNAME |
+// | `3` | TXT |
+// | `4` | MX |
+// | `5` | Redirect |
+// | `6` | Flatten |
+// | `7` | Pull Zone |
+// | `8` | SRV |
+// | `9` | CAA |
+// | `10` | PTR |
+// | `11` | Script |
+// | `12` | NS |
+// | `13` | SVCB |
+// | `14` | HTTPS |
+// | `15` | TLSA |
+//
+// </details>
+type DnsRecordModel_Type struct {
+	union json.RawMessage
+}
+
 // DnsRecordTypes 0 = A
 // 1 = AAAA
 // 2 = CNAME
@@ -2054,7 +2197,7 @@ type DnsRecordModel_IPGeoLocationInfo struct {
 // 4 = MX
 // 5 = Redirect
 // 6 = Flatten
-// 7 = PullZone
+// 7 = Pull Zone
 // 8 = SRV
 // 9 = CAA
 // 10 = PTR
@@ -2072,7 +2215,7 @@ type DnsRecordTypes int
 // 4 = MX
 // 5 = Redirect
 // 6 = Flatten
-// 7 = PullZone
+// 7 = Pull Zone
 // 8 = SRV
 // 9 = CAA
 // 10 = PTR
@@ -2119,16 +2262,56 @@ type DnsZoneDiscoveredRecordModel struct {
 	IsProxied *bool `json:"IsProxied,omitempty"`
 
 	// Name Record name relative to the zone. '@' represents apex.
-	Name     *string                            `json:"Name,omitempty"`
-	Port     *int32                             `json:"Port,omitempty"`
-	Priority *int32                             `json:"Priority,omitempty"`
-	Ttl      *int32                             `json:"Ttl,omitempty"`
-	Type     *DnsZoneDiscoveredRecordModel_Type `json:"Type,omitempty"`
-	Value    *string                            `json:"Value,omitempty"`
-	Weight   *int32                             `json:"Weight,omitempty"`
+	Name     *string `json:"Name,omitempty"`
+	Port     *int32  `json:"Port,omitempty"`
+	Priority *int32  `json:"Priority,omitempty"`
+	Ttl      *int32  `json:"Ttl,omitempty"`
+
+	// Type <details>
+	// <summary>Show all 13 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | A |
+	// | `1` | AAAA |
+	// | `2` | CNAME |
+	// | `3` | TXT |
+	// | `4` | MX |
+	// | `8` | SRV |
+	// | `9` | CAA |
+	// | `10` | PTR |
+	// | `12` | NS |
+	// | `13` | SVCB |
+	// | `14` | HTTPS |
+	// | `15` | TLSA |
+	// | `16` | SOA |
+	//
+	// </details>
+	Type   *DnsZoneDiscoveredRecordModel_Type `json:"Type,omitempty"`
+	Value  *string                            `json:"Value,omitempty"`
+	Weight *int32                             `json:"Weight,omitempty"`
 }
 
-// DnsZoneDiscoveredRecordModel_Type defines model for DnsZoneDiscoveredRecordModel.Type.
+// DnsZoneDiscoveredRecordModel_Type <details>
+// <summary>Show all 13 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | A |
+// | `1` | AAAA |
+// | `2` | CNAME |
+// | `3` | TXT |
+// | `4` | MX |
+// | `8` | SRV |
+// | `9` | CAA |
+// | `10` | PTR |
+// | `12` | NS |
+// | `13` | SVCB |
+// | `14` | HTTPS |
+// | `15` | TLSA |
+// | `16` | SOA |
+//
+// </details>
 type DnsZoneDiscoveredRecordModel_Type struct {
 	union json.RawMessage
 }
@@ -2142,7 +2325,7 @@ type DnsZoneDiscoveredRecordModel_Type struct {
 // 9 = CAA
 // 10 = PTR
 // 12 = NS
-// 13 = Svcb
+// 13 = SVCB
 // 14 = HTTPS
 // 15 = TLSA
 // 16 = SOA
@@ -2158,6 +2341,9 @@ type DnsZoneImportResultModel struct {
 // DnsZoneModel defines model for DnsZoneModel.
 type DnsZoneModel struct {
 	// CertificateKeyType The private key type to use for automatic certificates
+	//
+	// 0 = ECDSA
+	// 1 = RSA
 	CertificateKeyType       *DnsZoneModel_CertificateKeyType `json:"CertificateKeyType,omitempty"`
 	CustomNameserversEnabled *bool                            `json:"CustomNameserversEnabled,omitempty"`
 	DateCreated              *time.Time                       `json:"DateCreated,omitempty"`
@@ -2169,6 +2355,9 @@ type DnsZoneModel struct {
 	Id            *int64  `json:"Id,omitempty"`
 
 	// LogAnonymizationType Sets the log anonymization type for this zone
+	//
+	// 0 = One Digit
+	// 1 = Drop
 	LogAnonymizationType *DnsZoneModel_LogAnonymizationType `json:"LogAnonymizationType,omitempty"`
 	LoggingEnabled       *bool                              `json:"LoggingEnabled,omitempty"`
 
@@ -2183,11 +2372,17 @@ type DnsZoneModel struct {
 }
 
 // DnsZoneModel_CertificateKeyType The private key type to use for automatic certificates
+//
+// 0 = ECDSA
+// 1 = RSA
 type DnsZoneModel_CertificateKeyType struct {
 	union json.RawMessage
 }
 
 // DnsZoneModel_LogAnonymizationType Sets the log anonymization type for this zone
+//
+// 0 = One Digit
+// 1 = Drop
 type DnsZoneModel_LogAnonymizationType struct {
 	union json.RawMessage
 }
@@ -2203,11 +2398,19 @@ type DnsZoneRecordScanJobResponse struct {
 	Records     *[]DnsZoneDiscoveredRecordModel `json:"Records,omitempty"`
 
 	// Status 0 = Pending
-	// 1 = InProgress
+	// 1 = In Progress
 	// 2 = Completed
 	// 3 = Failed
-	Status *DnsZoneScanJobStatus `json:"Status,omitempty"`
-	ZoneId *int64                `json:"ZoneId,omitempty"`
+	Status *DnsZoneRecordScanJobResponse_Status `json:"Status,omitempty"`
+	ZoneId *int64                               `json:"ZoneId,omitempty"`
+}
+
+// DnsZoneRecordScanJobResponse_Status 0 = Pending
+// 1 = In Progress
+// 2 = Completed
+// 3 = Failed
+type DnsZoneRecordScanJobResponse_Status struct {
+	union json.RawMessage
 }
 
 // DnsZoneRecordScanTriggerResponse defines model for DnsZoneRecordScanTriggerResponse.
@@ -2215,14 +2418,22 @@ type DnsZoneRecordScanTriggerResponse struct {
 	JobId *string `json:"JobId,omitempty"`
 
 	// Status 0 = Pending
-	// 1 = InProgress
+	// 1 = In Progress
 	// 2 = Completed
 	// 3 = Failed
-	Status *DnsZoneScanJobStatus `json:"Status,omitempty"`
+	Status *DnsZoneRecordScanTriggerResponse_Status `json:"Status,omitempty"`
+}
+
+// DnsZoneRecordScanTriggerResponse_Status 0 = Pending
+// 1 = In Progress
+// 2 = Completed
+// 3 = Failed
+type DnsZoneRecordScanTriggerResponse_Status struct {
+	union json.RawMessage
 }
 
 // DnsZoneScanJobStatus 0 = Pending
-// 1 = InProgress
+// 1 = In Progress
 // 2 = Completed
 // 3 = Failed
 type DnsZoneScanJobStatus int
@@ -2238,47 +2449,47 @@ type DnsZoneStatisticsModel struct {
 
 // DrmVersion 0 = Basic
 // 1 = Enterprise
-// 2 = BasicV2
+// 2 = Basic V2
 type DrmVersion int
 
-// EdgeRuleActionType 0 = ForceSSL
+// EdgeRuleActionType 0 = Force SSL
 // 1 = Redirect
-// 2 = OriginUrl
-// 3 = OverrideCacheTime
-// 4 = BlockRequest
-// 5 = SetResponseHeader
-// 6 = SetRequestHeader
-// 7 = ForceDownload
-// 8 = DisableTokenAuthentication
-// 9 = EnableTokenAuthentication
-// 10 = OverrideCacheTimePublic
-// 11 = IgnoreQueryString
-// 12 = DisableOptimizer
-// 13 = ForceCompression
-// 14 = SetStatusCode
-// 15 = BypassPermaCache
-// 16 = OverrideBrowserCacheTime
-// 17 = OriginStorage
-// 18 = SetNetworkRateLimit
-// 19 = SetConnectionLimit
-// 20 = SetRequestsPerSecondLimit
-// 21 = RunEdgeScript
-// 22 = OriginMagicContainers
-// 23 = DisableWAF
-// 24 = RetryOrigin
-// 25 = OverrideBrowserCacheResponseHeader
-// 26 = RemoveBrowserCacheResponseHeader
-// 27 = DisableShieldChallenge
-// 28 = DisableShield
-// 29 = DisableShieldBotDetection
-// 30 = BypassAwsS3Authentication
-// 31 = DisableShieldAccessLists
-// 32 = DisableShieldRateLimiting
-// 33 = EnableRequestCoalescing
-// 34 = DisableRequestCoalescing
-// 35 = UseLoadBalancer
-// 36 = ForceLoadBalancerStickySessionMode
-// 37 = StripCookiesClientToOrigin
+// 2 = Origin URL
+// 3 = Override Cache Time
+// 4 = Block Request
+// 5 = Set Response Header
+// 6 = Set Request Header
+// 7 = Force Download
+// 8 = Disable Token Authentication
+// 9 = Enable Token Authentication
+// 10 = Override Cache Time Public
+// 11 = Ignore Query String
+// 12 = Disable Optimizer
+// 13 = Force Compression
+// 14 = Set Status Code
+// 15 = Bypass Perma-Cache
+// 16 = Override Browser Cache Time
+// 17 = Origin Storage
+// 18 = Set Network Rate Limit
+// 19 = Set Connection Limit
+// 20 = Set Requests Per Second Limit
+// 21 = Run Edge Script
+// 22 = Origin Magic Containers
+// 23 = Disable WAF
+// 24 = Retry Origin
+// 25 = Override Browser Cache Response Header
+// 26 = Remove Browser Cache Response Header
+// 27 = Disable Shield Challenge
+// 28 = Disable Shield
+// 29 = Disable Shield Bot Detection
+// 30 = Bypass AWS S3 Authentication
+// 31 = Disable Shield Access Lists
+// 32 = Disable Shield Rate Limiting
+// 33 = Enable Request Coalescing
+// 34 = Disable Request Coalescing
+// 35 = Use Load Balancer
+// 36 = Force Load Balancer Sticky Session Mode
+// 37 = Strip Cookies (Client to Origin)
 type EdgeRuleActionType int
 
 // EdgeRuleV2ActionModel defines model for EdgeRuleV2ActionModel.
@@ -2287,45 +2498,101 @@ type EdgeRuleV2ActionModel struct {
 	ActionParameter2 *string `json:"ActionParameter2,omitempty"`
 	ActionParameter3 *string `json:"ActionParameter3,omitempty"`
 
-	// ActionType 0 = ForceSSL
-	// 1 = Redirect
-	// 2 = OriginUrl
-	// 3 = OverrideCacheTime
-	// 4 = BlockRequest
-	// 5 = SetResponseHeader
-	// 6 = SetRequestHeader
-	// 7 = ForceDownload
-	// 8 = DisableTokenAuthentication
-	// 9 = EnableTokenAuthentication
-	// 10 = OverrideCacheTimePublic
-	// 11 = IgnoreQueryString
-	// 12 = DisableOptimizer
-	// 13 = ForceCompression
-	// 14 = SetStatusCode
-	// 15 = BypassPermaCache
-	// 16 = OverrideBrowserCacheTime
-	// 17 = OriginStorage
-	// 18 = SetNetworkRateLimit
-	// 19 = SetConnectionLimit
-	// 20 = SetRequestsPerSecondLimit
-	// 21 = RunEdgeScript
-	// 22 = OriginMagicContainers
-	// 23 = DisableWAF
-	// 24 = RetryOrigin
-	// 25 = OverrideBrowserCacheResponseHeader
-	// 26 = RemoveBrowserCacheResponseHeader
-	// 27 = DisableShieldChallenge
-	// 28 = DisableShield
-	// 29 = DisableShieldBotDetection
-	// 30 = BypassAwsS3Authentication
-	// 31 = DisableShieldAccessLists
-	// 32 = DisableShieldRateLimiting
-	// 33 = EnableRequestCoalescing
-	// 34 = DisableRequestCoalescing
-	// 35 = UseLoadBalancer
-	// 36 = ForceLoadBalancerStickySessionMode
-	// 37 = StripCookiesClientToOrigin
-	ActionType *EdgeRuleActionType `json:"ActionType,omitempty"`
+	// ActionType <details>
+	// <summary>Show all 38 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | Force SSL |
+	// | `1` | Redirect |
+	// | `2` | Origin URL |
+	// | `3` | Override Cache Time |
+	// | `4` | Block Request |
+	// | `5` | Set Response Header |
+	// | `6` | Set Request Header |
+	// | `7` | Force Download |
+	// | `8` | Disable Token Authentication |
+	// | `9` | Enable Token Authentication |
+	// | `10` | Override Cache Time Public |
+	// | `11` | Ignore Query String |
+	// | `12` | Disable Optimizer |
+	// | `13` | Force Compression |
+	// | `14` | Set Status Code |
+	// | `15` | Bypass Perma-Cache |
+	// | `16` | Override Browser Cache Time |
+	// | `17` | Origin Storage |
+	// | `18` | Set Network Rate Limit |
+	// | `19` | Set Connection Limit |
+	// | `20` | Set Requests Per Second Limit |
+	// | `21` | Run Edge Script |
+	// | `22` | Origin Magic Containers |
+	// | `23` | Disable WAF |
+	// | `24` | Retry Origin |
+	// | `25` | Override Browser Cache Response Header |
+	// | `26` | Remove Browser Cache Response Header |
+	// | `27` | Disable Shield Challenge |
+	// | `28` | Disable Shield |
+	// | `29` | Disable Shield Bot Detection |
+	// | `30` | Bypass AWS S3 Authentication |
+	// | `31` | Disable Shield Access Lists |
+	// | `32` | Disable Shield Rate Limiting |
+	// | `33` | Enable Request Coalescing |
+	// | `34` | Disable Request Coalescing |
+	// | `35` | Use Load Balancer |
+	// | `36` | Force Load Balancer Sticky Session Mode |
+	// | `37` | Strip Cookies (Client to Origin) |
+	//
+	// </details>
+	ActionType *EdgeRuleV2ActionModel_ActionType `json:"ActionType,omitempty"`
+}
+
+// EdgeRuleV2ActionModel_ActionType <details>
+// <summary>Show all 38 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | Force SSL |
+// | `1` | Redirect |
+// | `2` | Origin URL |
+// | `3` | Override Cache Time |
+// | `4` | Block Request |
+// | `5` | Set Response Header |
+// | `6` | Set Request Header |
+// | `7` | Force Download |
+// | `8` | Disable Token Authentication |
+// | `9` | Enable Token Authentication |
+// | `10` | Override Cache Time Public |
+// | `11` | Ignore Query String |
+// | `12` | Disable Optimizer |
+// | `13` | Force Compression |
+// | `14` | Set Status Code |
+// | `15` | Bypass Perma-Cache |
+// | `16` | Override Browser Cache Time |
+// | `17` | Origin Storage |
+// | `18` | Set Network Rate Limit |
+// | `19` | Set Connection Limit |
+// | `20` | Set Requests Per Second Limit |
+// | `21` | Run Edge Script |
+// | `22` | Origin Magic Containers |
+// | `23` | Disable WAF |
+// | `24` | Retry Origin |
+// | `25` | Override Browser Cache Response Header |
+// | `26` | Remove Browser Cache Response Header |
+// | `27` | Disable Shield Challenge |
+// | `28` | Disable Shield |
+// | `29` | Disable Shield Bot Detection |
+// | `30` | Bypass AWS S3 Authentication |
+// | `31` | Disable Shield Access Lists |
+// | `32` | Disable Shield Rate Limiting |
+// | `33` | Enable Request Coalescing |
+// | `34` | Disable Request Coalescing |
+// | `35` | Use Load Balancer |
+// | `36` | Force Load Balancer Sticky Session Mode |
+// | `37` | Strip Cookies (Client to Origin) |
+//
+// </details>
+type EdgeRuleV2ActionModel_ActionType struct {
+	union json.RawMessage
 }
 
 // EdgeRuleV2Model defines model for EdgeRuleV2Model.
@@ -2340,6 +2607,52 @@ type EdgeRuleV2Model struct {
 	ActionParameter3 *string `json:"ActionParameter3,omitempty"`
 
 	// ActionType The action type of the edge rule
+	//
+	// <details>
+	// <summary>Show all 38 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | Force SSL |
+	// | `1` | Redirect |
+	// | `2` | Origin URL |
+	// | `3` | Override Cache Time |
+	// | `4` | Block Request |
+	// | `5` | Set Response Header |
+	// | `6` | Set Request Header |
+	// | `7` | Force Download |
+	// | `8` | Disable Token Authentication |
+	// | `9` | Enable Token Authentication |
+	// | `10` | Override Cache Time Public |
+	// | `11` | Ignore Query String |
+	// | `12` | Disable Optimizer |
+	// | `13` | Force Compression |
+	// | `14` | Set Status Code |
+	// | `15` | Bypass Perma-Cache |
+	// | `16` | Override Browser Cache Time |
+	// | `17` | Origin Storage |
+	// | `18` | Set Network Rate Limit |
+	// | `19` | Set Connection Limit |
+	// | `20` | Set Requests Per Second Limit |
+	// | `21` | Run Edge Script |
+	// | `22` | Origin Magic Containers |
+	// | `23` | Disable WAF |
+	// | `24` | Retry Origin |
+	// | `25` | Override Browser Cache Response Header |
+	// | `26` | Remove Browser Cache Response Header |
+	// | `27` | Disable Shield Challenge |
+	// | `28` | Disable Shield |
+	// | `29` | Disable Shield Bot Detection |
+	// | `30` | Bypass AWS S3 Authentication |
+	// | `31` | Disable Shield Access Lists |
+	// | `32` | Disable Shield Rate Limiting |
+	// | `33` | Enable Request Coalescing |
+	// | `34` | Disable Request Coalescing |
+	// | `35` | Use Load Balancer |
+	// | `36` | Force Load Balancer Sticky Session Mode |
+	// | `37` | Strip Cookies (Client to Origin) |
+	//
+	// </details>
 	ActionType *EdgeRuleV2Model_ActionType `json:"ActionType,omitempty"`
 
 	// Description The description of the edge rule
@@ -2359,16 +2672,70 @@ type EdgeRuleV2Model struct {
 	ReadOnly *bool `json:"ReadOnly,omitempty"`
 
 	// TriggerMatchingType The trigger matching type
+	//
+	// 0 = Match Any
+	// 1 = Match All
+	// 2 = Match None
 	TriggerMatchingType *EdgeRuleV2Model_TriggerMatchingType `json:"TriggerMatchingType,omitempty"`
 	Triggers            *[]Trigger                           `json:"Triggers,omitempty"`
 }
 
 // EdgeRuleV2Model_ActionType The action type of the edge rule
+//
+// <details>
+// <summary>Show all 38 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | Force SSL |
+// | `1` | Redirect |
+// | `2` | Origin URL |
+// | `3` | Override Cache Time |
+// | `4` | Block Request |
+// | `5` | Set Response Header |
+// | `6` | Set Request Header |
+// | `7` | Force Download |
+// | `8` | Disable Token Authentication |
+// | `9` | Enable Token Authentication |
+// | `10` | Override Cache Time Public |
+// | `11` | Ignore Query String |
+// | `12` | Disable Optimizer |
+// | `13` | Force Compression |
+// | `14` | Set Status Code |
+// | `15` | Bypass Perma-Cache |
+// | `16` | Override Browser Cache Time |
+// | `17` | Origin Storage |
+// | `18` | Set Network Rate Limit |
+// | `19` | Set Connection Limit |
+// | `20` | Set Requests Per Second Limit |
+// | `21` | Run Edge Script |
+// | `22` | Origin Magic Containers |
+// | `23` | Disable WAF |
+// | `24` | Retry Origin |
+// | `25` | Override Browser Cache Response Header |
+// | `26` | Remove Browser Cache Response Header |
+// | `27` | Disable Shield Challenge |
+// | `28` | Disable Shield |
+// | `29` | Disable Shield Bot Detection |
+// | `30` | Bypass AWS S3 Authentication |
+// | `31` | Disable Shield Access Lists |
+// | `32` | Disable Shield Rate Limiting |
+// | `33` | Enable Request Coalescing |
+// | `34` | Disable Request Coalescing |
+// | `35` | Use Load Balancer |
+// | `36` | Force Load Balancer Sticky Session Mode |
+// | `37` | Strip Cookies (Client to Origin) |
+//
+// </details>
 type EdgeRuleV2Model_ActionType struct {
 	union json.RawMessage
 }
 
 // EdgeRuleV2Model_TriggerMatchingType The trigger matching type
+//
+// 0 = Match Any
+// 1 = Match All
+// 2 = Match None
 type EdgeRuleV2Model_TriggerMatchingType struct {
 	union json.RawMessage
 }
@@ -2378,8 +2745,8 @@ type EdgeRuleV2Model_TriggerMatchingType struct {
 type EncodingTier int
 
 // ExecutionPhase 0 = Cache
-// 1 = LoadBalancer
-// 2 = PreCache
+// 1 = Load Balancer
+// 2 = Pre-Cache
 type ExecutionPhase int
 
 // ExternalDnsCertificateRequest defines model for ExternalDnsCertificateRequest.
@@ -2429,15 +2796,23 @@ type GetUserAuditLogResponse struct {
 
 // GoogleWidevineDrm defines model for GoogleWidevineDrm.
 type GoogleWidevineDrm struct {
-	CertificateExpirationDate *time.Time                                `json:"CertificateExpirationDate,omitempty"`
-	CertificateId             *int64                                    `json:"CertificateId,omitempty"`
-	Enabled                   *bool                                     `json:"Enabled,omitempty"`
-	MinClientSecurityLevel    *GoogleWidevineDrm_MinClientSecurityLevel `json:"MinClientSecurityLevel,omitempty"`
-	Provider                  *string                                   `json:"Provider,omitempty"`
-	SdOnlyForL3               *bool                                     `json:"SdOnlyForL3,omitempty"`
+	CertificateExpirationDate *time.Time `json:"CertificateExpirationDate,omitempty"`
+	CertificateId             *int64     `json:"CertificateId,omitempty"`
+	Enabled                   *bool      `json:"Enabled,omitempty"`
+
+	// MinClientSecurityLevel 0 = None
+	// 1 = L1
+	// 2 = L2
+	// 3 = L3
+	MinClientSecurityLevel *GoogleWidevineDrm_MinClientSecurityLevel `json:"MinClientSecurityLevel,omitempty"`
+	Provider               *string                                   `json:"Provider,omitempty"`
+	SdOnlyForL3            *bool                                     `json:"SdOnlyForL3,omitempty"`
 }
 
-// GoogleWidevineDrm_MinClientSecurityLevel defines model for GoogleWidevineDrm.MinClientSecurityLevel.
+// GoogleWidevineDrm_MinClientSecurityLevel 0 = None
+// 1 = L1
+// 2 = L2
+// 3 = L3
 type GoogleWidevineDrm_MinClientSecurityLevel struct {
 	union json.RawMessage
 }
@@ -2448,6 +2823,11 @@ type GoogleWidevineDrmUpdateModel struct {
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// MinClientSecurityLevel (Optional) Minimum Client Security Level (1 being most secure, 3 least secure and is default)
+	//
+	// 0 = None
+	// 1 = L1
+	// 2 = L2
+	// 3 = L3
 	MinClientSecurityLevel *GoogleWidevineDrmUpdateModel_MinClientSecurityLevel `json:"MinClientSecurityLevel,omitempty"`
 
 	// SdOnlyForL3 (Optional) Only allow audio and SD access to Widevine L3 clients
@@ -2455,6 +2835,11 @@ type GoogleWidevineDrmUpdateModel struct {
 }
 
 // GoogleWidevineDrmUpdateModel_MinClientSecurityLevel (Optional) Minimum Client Security Level (1 being most secure, 3 least secure and is default)
+//
+// 0 = None
+// 1 = L1
+// 2 = L2
+// 3 = L3
 type GoogleWidevineDrmUpdateModel_MinClientSecurityLevel struct {
 	union json.RawMessage
 }
@@ -2481,9 +2866,18 @@ type HostnameModel struct {
 	CertificateKey *string `json:"CertificateKey,omitempty"`
 
 	// CertificateKeyType The private key type to use for automatic certificates
+	//
+	// 0 = ECDSA
+	// 1 = RSA
 	CertificateKeyType *HostnameModel_CertificateKeyType `json:"CertificateKeyType,omitempty"`
 
 	// CertificateProvisionType The provisioned certificate type
+	//
+	// 0 = Unknown
+	// 1 = HTTP-01
+	// 2 = DNS-01
+	// 3 = Custom
+	// 4 = Managed
 	CertificateProvisionType *HostnameModel_CertificateProvisionType `json:"CertificateProvisionType,omitempty"`
 
 	// ForceSSL Determines if the Force SSL feature is enabled
@@ -2506,19 +2900,28 @@ type HostnameModel struct {
 }
 
 // HostnameModel_CertificateKeyType The private key type to use for automatic certificates
+//
+// 0 = ECDSA
+// 1 = RSA
 type HostnameModel_CertificateKeyType struct {
 	union json.RawMessage
 }
 
 // HostnameModel_CertificateProvisionType The provisioned certificate type
+//
+// 0 = Unknown
+// 1 = HTTP-01
+// 2 = DNS-01
+// 3 = Custom
+// 4 = Managed
 type HostnameModel_CertificateProvisionType struct {
 	union json.RawMessage
 }
 
-// IpFamilyPolicy 0 = IPv4Only
-// 1 = DualStack
-// 2 = DualStackPreferIPv6
-// 3 = IPv6Only
+// IpFamilyPolicy 0 = IPv4 Only
+// 1 = Dual Stack
+// 2 = Dual Stack (Prefer IPv6)
+// 3 = IPv6 Only
 type IpFamilyPolicy int
 
 // IssueWildcardCertificateRequestModel defines model for IssueWildcardCertificateRequestModel.
@@ -2556,6 +2959,11 @@ type LoadBalancerOriginCreateModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginType The type of origin to connect to. Magic Container origins must be CDN endpoints; Anycast endpoints are not supported, use a Standard origin for those
+	//
+	// 0 = Standard
+	// 1 = Storage Zone
+	// 2 = Edge Script
+	// 3 = Magic Container
 	OriginType *LoadBalancerOriginCreateModel_OriginType `json:"OriginType,omitempty"`
 
 	// StandardOrigin Standard origin settings - required when using the Standard origin type
@@ -2574,6 +2982,11 @@ type LoadBalancerOriginCreateModel_MagicContainersOrigin struct {
 }
 
 // LoadBalancerOriginCreateModel_OriginType The type of origin to connect to. Magic Container origins must be CDN endpoints; Anycast endpoints are not supported, use a Standard origin for those
+//
+// 0 = Standard
+// 1 = Storage Zone
+// 2 = Edge Script
+// 3 = Magic Container
 type LoadBalancerOriginCreateModel_OriginType struct {
 	union json.RawMessage
 }
@@ -2612,6 +3025,11 @@ type LoadBalancerOriginGroupModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginLoadBalancingMethod The load balancing method used for selecting origins within the group
+	//
+	// 0 = Round Robin
+	// 1 = Weighted Random
+	// 2 = Least Connections
+	// 3 = Latency
 	OriginLoadBalancingMethod *LoadBalancerOriginGroupModel_OriginLoadBalancingMethod `json:"OriginLoadBalancingMethod,omitempty"`
 
 	// Origins The list of origins associated with the origin group
@@ -2630,6 +3048,11 @@ type LoadBalancerOriginGroupModel_HealthCheckSettings struct {
 }
 
 // LoadBalancerOriginGroupModel_OriginLoadBalancingMethod The load balancing method used for selecting origins within the group
+//
+// 0 = Round Robin
+// 1 = Weighted Random
+// 2 = Least Connections
+// 3 = Latency
 type LoadBalancerOriginGroupModel_OriginLoadBalancingMethod struct {
 	union json.RawMessage
 }
@@ -2658,6 +3081,9 @@ type LoadBalancerOriginModel struct {
 	Enabled *bool `json:"Enabled,omitempty"`
 
 	// HealthStatus Current health status of the origin
+	//
+	// 0 = Healthy
+	// 1 = Degraded
 	HealthStatus *LoadBalancerOriginModel_HealthStatus `json:"HealthStatus,omitempty"`
 
 	// Id The unique ID of the origin
@@ -2670,6 +3096,11 @@ type LoadBalancerOriginModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginType The type of origin to connect to. Magic Container origins must be CDN endpoints; Anycast endpoints are not supported, use a Standard origin for those
+	//
+	// 0 = Standard
+	// 1 = Storage Zone
+	// 2 = Edge Script
+	// 3 = Magic Container
 	OriginType *LoadBalancerOriginModel_OriginType `json:"OriginType,omitempty"`
 
 	// StandardOrigin Standard Origin settings - Required with Standard origin type
@@ -2683,6 +3114,9 @@ type LoadBalancerOriginModel struct {
 }
 
 // LoadBalancerOriginModel_HealthStatus Current health status of the origin
+//
+// 0 = Healthy
+// 1 = Degraded
 type LoadBalancerOriginModel_HealthStatus struct {
 	union json.RawMessage
 }
@@ -2693,6 +3127,11 @@ type LoadBalancerOriginModel_MagicContainersOrigin struct {
 }
 
 // LoadBalancerOriginModel_OriginType The type of origin to connect to. Magic Container origins must be CDN endpoints; Anycast endpoints are not supported, use a Standard origin for those
+//
+// 0 = Standard
+// 1 = Storage Zone
+// 2 = Edge Script
+// 3 = Magic Container
 type LoadBalancerOriginModel_OriginType struct {
 	union json.RawMessage
 }
@@ -2725,21 +3164,37 @@ type LoadBalancerProfileModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginGroupLoadBalancingMethod The load balancing method used for selecting origin groups
+	//
+	// 0 = Weighted Random
+	// 1 = Round Robin
+	// 2 = Geolocation
+	// 3 = Lowest Average Latency
 	OriginGroupLoadBalancingMethod *LoadBalancerProfileModel_OriginGroupLoadBalancingMethod `json:"OriginGroupLoadBalancingMethod,omitempty"`
 
 	// OriginGroups The list of origin groups associated with the Load Balancer profile
 	OriginGroups *[]LoadBalancerOriginGroupModel `json:"OriginGroups,omitempty"`
 
 	// StickySessionType The sticky session type used for persisting client sessions
+	//
+	// 0 = Off
+	// 1 = Cookie
 	StickySessionType *LoadBalancerProfileModel_StickySessionType `json:"StickySessionType,omitempty"`
 }
 
 // LoadBalancerProfileModel_OriginGroupLoadBalancingMethod The load balancing method used for selecting origin groups
+//
+// 0 = Weighted Random
+// 1 = Round Robin
+// 2 = Geolocation
+// 3 = Lowest Average Latency
 type LoadBalancerProfileModel_OriginGroupLoadBalancingMethod struct {
 	union json.RawMessage
 }
 
 // LoadBalancerProfileModel_StickySessionType The sticky session type used for persisting client sessions
+//
+// 0 = Off
+// 1 = Cookie
 type LoadBalancerProfileModel_StickySessionType struct {
 	union json.RawMessage
 }
@@ -2750,18 +3205,34 @@ type LoadBalancerSettingsModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginGroupLoadBalancingMethod The load balancing method used for selecting origin groups
+	//
+	// 0 = Weighted Random
+	// 1 = Round Robin
+	// 2 = Geolocation
+	// 3 = Lowest Average Latency
 	OriginGroupLoadBalancingMethod *LoadBalancerSettingsModel_OriginGroupLoadBalancingMethod `json:"OriginGroupLoadBalancingMethod,omitempty"`
 
 	// StickySessionType The sticky session type to use for persisting client to an origin
+	//
+	// 0 = Off
+	// 1 = Cookie
 	StickySessionType *LoadBalancerSettingsModel_StickySessionType `json:"StickySessionType,omitempty"`
 }
 
 // LoadBalancerSettingsModel_OriginGroupLoadBalancingMethod The load balancing method used for selecting origin groups
+//
+// 0 = Weighted Random
+// 1 = Round Robin
+// 2 = Geolocation
+// 3 = Lowest Average Latency
 type LoadBalancerSettingsModel_OriginGroupLoadBalancingMethod struct {
 	union json.RawMessage
 }
 
 // LoadBalancerSettingsModel_StickySessionType The sticky session type to use for persisting client to an origin
+//
+// 0 = Off
+// 1 = Cookie
 type LoadBalancerSettingsModel_StickySessionType struct {
 	union json.RawMessage
 }
@@ -2811,7 +3282,7 @@ type LoadBalancerUsageModel struct {
 	Tiers            *[]LoadBalancerPricingTierModel `json:"Tiers,omitempty"`
 }
 
-// LogAnonymizationType 0 = OneDigit
+// LogAnonymizationType 0 = One Digit
 // 1 = Drop
 type LogAnonymizationType int
 
@@ -2865,12 +3336,12 @@ type OptimizerStatisticsModel struct {
 	TrafficSavedChart *map[string]int64 `json:"TrafficSavedChart,omitempty"`
 }
 
-// OptimizerWatermarkPosition 0 = BottomLeft
-// 1 = BottomRight
-// 2 = TopLeft
-// 3 = TopRight
+// OptimizerWatermarkPosition 0 = Bottom Left
+// 1 = Bottom Right
+// 2 = Top Left
+// 3 = Top Right
 // 4 = Center
-// 5 = CenterStretch
+// 5 = Center Stretch
 type OptimizerWatermarkPosition int
 
 // OriginGroupCreateModel defines model for OriginGroupCreateModel.
@@ -2891,6 +3362,11 @@ type OriginGroupCreateModel struct {
 	Name *string `json:"Name,omitempty"`
 
 	// OriginLoadBalancingMethod The load balancing method used for selecting origins within the group
+	//
+	// 0 = Round Robin
+	// 1 = Weighted Random
+	// 2 = Least Connections
+	// 3 = Latency
 	OriginLoadBalancingMethod *OriginGroupCreateModel_OriginLoadBalancingMethod `json:"OriginLoadBalancingMethod,omitempty"`
 
 	// Priority The priority of the origin group used for failover load balancing
@@ -2906,19 +3382,24 @@ type OriginGroupCreateModel_HealthCheckSettings struct {
 }
 
 // OriginGroupCreateModel_OriginLoadBalancingMethod The load balancing method used for selecting origins within the group
+//
+// 0 = Round Robin
+// 1 = Weighted Random
+// 2 = Least Connections
+// 3 = Latency
 type OriginGroupCreateModel_OriginLoadBalancingMethod struct {
 	union json.RawMessage
 }
 
-// OriginGroupLoadBalancingMethod 0 = WeightedRandom
-// 1 = RoundRobin
-// 2 = GeoLocation
-// 3 = LowestAverageLatency
+// OriginGroupLoadBalancingMethod 0 = Weighted Random
+// 1 = Round Robin
+// 2 = Geolocation
+// 3 = Lowest Average Latency
 type OriginGroupLoadBalancingMethod int
 
-// OriginLoadBalancingMethod 0 = RoundRobin
-// 1 = WeightedRandom
-// 2 = LeastConnections
+// OriginLoadBalancingMethod 0 = Round Robin
+// 1 = Weighted Random
+// 2 = Least Connections
 // 3 = Latency
 type OriginLoadBalancingMethod int
 
@@ -2932,9 +3413,9 @@ type OriginShieldConcurrencyStatisticsModel struct {
 }
 
 // OriginType 0 = Standard
-// 1 = Storage
-// 2 = EdgeScript
-// 3 = MagicContainer
+// 1 = Storage Zone
+// 2 = Edge Script
+// 3 = Magic Container
 type OriginType int
 
 // PaginationListModelOfApiKeyModel defines model for PaginationListModelOfApiKeyModel.
@@ -2969,9 +3450,9 @@ type PaginationListModelOfVideoLibraryModel struct {
 	TotalItems   *int32               `json:"TotalItems,omitempty"`
 }
 
-// PatternMatchingTypes 0 = MatchAny
-// 1 = MatchAll
-// 2 = MatchNone
+// PatternMatchingTypes 0 = Match Any
+// 1 = Match All
+// 2 = Match None
 type PatternMatchingTypes int
 
 // PaymentRequestModel defines model for PaymentRequestModel.
@@ -3012,100 +3493,113 @@ type PriceEstimationModel struct {
 	EstimatedCost *float64                        `json:"EstimatedCost,omitempty"`
 	PricePerUnit  *float64                        `json:"PricePerUnit,omitempty"`
 
-	// PricingType 0 = ListPrice
-	// 1 = UserOverride
-	// 2 = ResourceOverride
-	PricingType     *AppliedPricingType `json:"PricingType,omitempty"`
-	UnitDescription *string             `json:"UnitDescription,omitempty"`
+	// PricingType 0 = List Price
+	// 1 = User Override
+	// 2 = Resource Override
+	PricingType     *PriceEstimationModel_PricingType `json:"PricingType,omitempty"`
+	UnitDescription *string                           `json:"UnitDescription,omitempty"`
 }
 
-// PricingEstimationSource 1101 = CDN_Standard_Tier_EU_Traffic
-// 1102 = CDN_Standard_Tier_NA_Traffic
-// 1103 = CDN_Standard_Tier_APAC_Traffic
-// 1104 = CDN_Standard_Tier_AF_Traffic
-// 1105 = CDN_Standard_Tier_SA_Traffic
-// 1106 = CDN_Standard_Tier_Uncategorized
-// 1201 = CDN_Standard_Tier_Stream_EU_Traffic
-// 1202 = CDN_Standard_Tier_Stream_NA_Traffic
-// 1203 = CDN_Standard_Tier_Stream_APAC_Traffic
-// 1204 = CDN_Standard_Tier_Stream_AF_Traffic
-// 1205 = CDN_Standard_Tier_Stream_SA_Traffic
-// 1206 = CDN_Standard_Tier_Stream_Uncategorized
-// 1301 = CDN_Volume_Tier_EU_Traffic
-// 1302 = CDN_Volume_Tier_NA_Traffic
-// 1303 = CDN_Volume_Tier_APAC_Traffic
-// 1304 = CDN_Volume_Tier_AF_Traffic
-// 1305 = CDN_Volume_Tier_SA_Traffic
-// 1306 = CDN_Volume_Tier_Uncategorized
-// 1401 = CDN_Volume_Tier_Stream_EU_Traffic
-// 1402 = CDN_Volume_Tier_Stream_NA_Traffic
-// 1403 = CDN_Volume_Tier_Stream_APAC_Traffic
-// 1404 = CDN_Volume_Tier_Stream_AF_Traffic
-// 1405 = CDN_Volume_Tier_Stream_SA_Traffic
-// 1406 = CDN_Volume_Tier_Stream_Uncategorized
-// 1501 = CDN_Standard_Tier_Storage_EU_Traffic
-// 1502 = CDN_Standard_Tier_Storage_NA_Traffic
-// 1503 = CDN_Standard_Tier_Storage_APAC_Traffic
-// 1504 = CDN_Standard_Tier_Storage_AF_Traffic
-// 1505 = CDN_Standard_Tier_Storage_SA_Traffic
-// 1506 = CDN_Standard_Tier_Storage_Uncategorized
-// 1511 = CDN_Volume_Tier_Storage_EU_Traffic
-// 1512 = CDN_Volume_Tier_Storage_NA_Traffic
-// 1513 = CDN_Volume_Tier_Storage_APAC_Traffic
-// 1514 = CDN_Volume_Tier_Storage_AF_Traffic
-// 1515 = CDN_Volume_Tier_Storage_SA_Traffic
-// 1516 = CDN_Volume_Tier_Storage_Uncategorized
-// 1630 = CDN_WebSockets_ConsumptionBased
-// 1701 = CDN_Standard_Tier_MagicContainers_EU_Traffic
-// 1702 = CDN_Standard_Tier_MagicContainers_NA_Traffic
-// 1703 = CDN_Standard_Tier_MagicContainers_APAC_Traffic
-// 1704 = CDN_Standard_Tier_MagicContainers_AF_Traffic
-// 1705 = CDN_Standard_Tier_MagicContainers_SA_Traffic
-// 1706 = CDN_Standard_Tier_MagicContainers_Uncategorized
-// 1711 = CDN_Volume_Tier_MagicContainers_EU_Traffic
-// 1712 = CDN_Volume_Tier_MagicContainers_NA_Traffic
-// 1713 = CDN_Volume_Tier_MagicContainers_APAC_Traffic
-// 1714 = CDN_Volume_Tier_MagicContainers_AF_Traffic
-// 1715 = CDN_Volume_Tier_MagicContainers_SA_Traffic
-// 1716 = CDN_Volume_Tier_MagicContainers_Uncategorized
-// 1801 = CDN_Standard_Tier_Scripting_EU_Traffic
-// 1802 = CDN_Standard_Tier_Scripting_NA_Traffic
-// 1803 = CDN_Standard_Tier_Scripting_APAC_Traffic
-// 1804 = CDN_Standard_Tier_Scripting_AF_Traffic
-// 1805 = CDN_Standard_Tier_Scripting_SA_Traffic
-// 1806 = CDN_Standard_Tier_Scripting_Uncategorized
-// 1811 = CDN_Volume_Tier_Scripting_EU_Traffic
-// 1812 = CDN_Volume_Tier_Scripting_NA_Traffic
-// 1813 = CDN_Volume_Tier_Scripting_APAC_Traffic
-// 1814 = CDN_Volume_Tier_Scripting_AF_Traffic
-// 1815 = CDN_Volume_Tier_Scripting_SA_Traffic
-// 1816 = CDN_Volume_Tier_Scripting_Uncategorized
-// 2100 = Storage_Standard_Tier
-// 2200 = Storage_SSD_Tier
-// 2300 = Storage_Standard_Tier_Stream
-// 2400 = Storage_SSD_Tier_Stream
+// PriceEstimationModel_PricingType 0 = List Price
+// 1 = User Override
+// 2 = Resource Override
+type PriceEstimationModel_PricingType struct {
+	union json.RawMessage
+}
+
+// PricingEstimationSource 1101 = CDN Standard Tier - Europe Traffic
+// 1102 = CDN Standard Tier - North America Traffic
+// 1103 = CDN Standard Tier - Asia & Oceania Traffic
+// 1104 = CDN Standard Tier - Middle East & Africa Traffic
+// 1105 = CDN Standard Tier - South America Traffic
+// 1106 = CDN Standard Tier - Uncategorized Traffic
+// 1201 = CDN Standard Tier (Stream) - Europe Traffic
+// 1202 = CDN Standard Tier (Stream) - North America Traffic
+// 1203 = CDN Standard Tier (Stream) - Asia & Oceania Traffic
+// 1204 = CDN Standard Tier (Stream) - Middle East & Africa Traffic
+// 1205 = CDN Standard Tier (Stream) - South America Traffic
+// 1206 = CDN Standard Tier (Stream) - Uncategorized Traffic
+// 1301 = CDN Volume Tier - Europe Traffic
+// 1302 = CDN Volume Tier - North America Traffic
+// 1303 = CDN Volume Tier - Asia & Oceania Traffic
+// 1304 = CDN Volume Tier - Middle East & Africa Traffic
+// 1305 = CDN Volume Tier - South America Traffic
+// 1306 = CDN Volume Tier - Uncategorized Traffic
+// 1401 = CDN Volume Tier (Stream) - Europe Traffic
+// 1402 = CDN Volume Tier (Stream) - North America Traffic
+// 1403 = CDN Volume Tier (Stream) - Asia & Oceania Traffic
+// 1404 = CDN Volume Tier (Stream) - Middle East & Africa Traffic
+// 1405 = CDN Volume Tier (Stream) - South America Traffic
+// 1406 = CDN Volume Tier (Stream) - Uncategorized Traffic
+// 1501 = CDN Standard Tier (Storage) - Europe Traffic
+// 1502 = CDN Standard Tier (Storage) - North America Traffic
+// 1503 = CDN Standard Tier (Storage) - Asia & Oceania Traffic
+// 1504 = CDN Standard Tier (Storage) - Middle East & Africa Traffic
+// 1505 = CDN Standard Tier (Storage) - South America Traffic
+// 1506 = CDN Standard Tier (Storage) - Uncategorized Traffic
+// 1511 = CDN Volume Tier (Storage) - Europe Traffic
+// 1512 = CDN Volume Tier (Storage) - North America Traffic
+// 1513 = CDN Volume Tier (Storage) - Asia & Oceania Traffic
+// 1514 = CDN Volume Tier (Storage) - Middle East & Africa Traffic
+// 1515 = CDN Volume Tier (Storage) - South America Traffic
+// 1516 = CDN Volume Tier (Storage) - Uncategorized Traffic
+// 1630 = CDN WebSockets (Consumption Based)
+// 1701 = CDN Standard Tier (Magic Containers) - Europe Traffic
+// 1702 = CDN Standard Tier (Magic Containers) - North America Traffic
+// 1703 = CDN Standard Tier (Magic Containers) - Asia & Oceania Traffic
+// 1704 = CDN Standard Tier (Magic Containers) - Middle East & Africa Traffic
+// 1705 = CDN Standard Tier (Magic Containers) - South America Traffic
+// 1706 = CDN Standard Tier (Magic Containers) - Uncategorized Traffic
+// 1711 = CDN Volume Tier (Magic Containers) - Europe Traffic
+// 1712 = CDN Volume Tier (Magic Containers) - North America Traffic
+// 1713 = CDN Volume Tier (Magic Containers) - Asia & Oceania Traffic
+// 1714 = CDN Volume Tier (Magic Containers) - Middle East & Africa Traffic
+// 1715 = CDN Volume Tier (Magic Containers) - South America Traffic
+// 1716 = CDN Volume Tier (Magic Containers) - Uncategorized Traffic
+// 1801 = CDN Standard Tier (Edge Scripting) - Europe Traffic
+// 1802 = CDN Standard Tier (Edge Scripting) - North America Traffic
+// 1803 = CDN Standard Tier (Edge Scripting) - Asia & Oceania Traffic
+// 1804 = CDN Standard Tier (Edge Scripting) - Middle East & Africa Traffic
+// 1805 = CDN Standard Tier (Edge Scripting) - South America Traffic
+// 1806 = CDN Standard Tier (Edge Scripting) - Uncategorized Traffic
+// 1811 = CDN Volume Tier (Edge Scripting) - Europe Traffic
+// 1812 = CDN Volume Tier (Edge Scripting) - North America Traffic
+// 1813 = CDN Volume Tier (Edge Scripting) - Asia & Oceania Traffic
+// 1814 = CDN Volume Tier (Edge Scripting) - Middle East & Africa Traffic
+// 1815 = CDN Volume Tier (Edge Scripting) - South America Traffic
+// 1816 = CDN Volume Tier (Edge Scripting) - Uncategorized Traffic
+// 2100 = Storage Standard Tier
+// 2200 = Storage SSD Tier
+// 2300 = Storage Standard Tier (Stream)
+// 2400 = Storage SSD Tier (Stream)
 // 4100 = Transcribing
-// 4200 = PremiumEncoding
-// 4300 = DRM_Base
-// 4400 = DRM_LicenseIssued
-// 4501 = LiveEncoding_SD
-// 4502 = LiveEncoding_HD
-// 4503 = LiveEncoding_4K
-// 5200 = Scripting_CDN_Requests
-// 5300 = Scripting_CDN_CPU
+// 4200 = Premium Encoding
+// 4300 = DRM Base
+// 4400 = DRM License Issued
+// 4501 = Live Encoding SD
+// 4502 = Live Encoding HD
+// 4503 = Live Encoding 4K
+// 5200 = Edge Scripting CDN Requests
+// 5300 = Edge Scripting CDN CPU
 type PricingEstimationSource int
 
-// PrivateKeyType 0 = Ecdsa
-// 1 = Rsa
+// PrivateKeyType 0 = ECDSA
+// 1 = RSA
 type PrivateKeyType int
 
 // PrivateKeyUpdateModel defines model for PrivateKeyUpdateModel.
 type PrivateKeyUpdateModel struct {
 	Hostname string `json:"Hostname"`
 
-	// KeyType 0 = Ecdsa
-	// 1 = Rsa
-	KeyType PrivateKeyType `json:"KeyType"`
+	// KeyType 0 = ECDSA
+	// 1 = RSA
+	KeyType PrivateKeyUpdateModel_KeyType `json:"KeyType"`
+}
+
+// PrivateKeyUpdateModel_KeyType 0 = ECDSA
+// 1 = RSA
+type PrivateKeyUpdateModel_KeyType struct {
+	union json.RawMessage
 }
 
 // PullZoneAddModel defines model for PullZoneAddModel.
@@ -3191,6 +3685,10 @@ type PullZoneAddModel struct {
 	DnsOriginScheme *string `json:"DnsOriginScheme,omitempty"`
 
 	// EdgeScriptExecutionPhase The execution phase of the edge script
+	//
+	// 0 = Cache
+	// 1 = Load Balancer
+	// 2 = Pre-Cache
 	EdgeScriptExecutionPhase *PullZoneAddModel_EdgeScriptExecutionPhase `json:"EdgeScriptExecutionPhase,omitempty"`
 
 	// EdgeScriptId The ID of the edge script that will be used as the origin
@@ -3287,6 +3785,11 @@ type PullZoneAddModel struct {
 	IgnoreQueryStrings *bool `json:"IgnoreQueryStrings,omitempty"`
 
 	// IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack (default, best latency and compatibility), 2=DualStackPreferIPv6, 3=IPv6Only.
+	//
+	// 0 = IPv4 Only
+	// 1 = Dual Stack
+	// 2 = Dual Stack (Prefer IPv6)
+	// 3 = IPv6 Only
 	IpFamilyPolicy *PullZoneAddModel_IpFamilyPolicy `json:"IpFamilyPolicy,omitempty"`
 
 	// LimitRateAfter Determines the amount of traffic transferred before the client is limited
@@ -3299,12 +3802,21 @@ type PullZoneAddModel struct {
 	LoadBalancerId *int64 `json:"LoadBalancerId,omitempty"`
 
 	// LogAnonymizationType Sets the log anonymization type for this pull zone
+	//
+	// 0 = One Digit
+	// 1 = Drop
 	LogAnonymizationType *PullZoneAddModel_LogAnonymizationType `json:"LogAnonymizationType,omitempty"`
-	LogFormat            *PullZoneAddModel_LogFormat            `json:"LogFormat,omitempty"`
+
+	// LogFormat 0 = Plain
+	// 1 = JSON
+	LogFormat *PullZoneAddModel_LogFormat `json:"LogFormat,omitempty"`
 
 	// LogForwardingEnabled Sets the log forwarding token for the zone
-	LogForwardingEnabled *bool                                 `json:"LogForwardingEnabled,omitempty"`
-	LogForwardingFormat  *PullZoneAddModel_LogForwardingFormat `json:"LogForwardingFormat,omitempty"`
+	LogForwardingEnabled *bool `json:"LogForwardingEnabled,omitempty"`
+
+	// LogForwardingFormat 0 = Plain
+	// 1 = JSON
+	LogForwardingFormat *PullZoneAddModel_LogForwardingFormat `json:"LogForwardingFormat,omitempty"`
 
 	// LogForwardingHostname Sets the log forwarding destination hostname for the zone
 	LogForwardingHostname *string `json:"LogForwardingHostname,omitempty"`
@@ -3313,6 +3825,11 @@ type PullZoneAddModel struct {
 	LogForwardingPort *int32 `json:"LogForwardingPort,omitempty"`
 
 	// LogForwardingProtocol Sets the log forwarding protocol type
+	//
+	// 0 = UDP
+	// 1 = TCP
+	// 2 = TCP Encrypted
+	// 3 = Datadog
 	LogForwardingProtocol *PullZoneAddModel_LogForwardingProtocol `json:"LogForwardingProtocol,omitempty"`
 
 	// LogForwardingToken Sets the log forwarding token for the zone
@@ -3366,6 +3883,10 @@ type PullZoneAddModel struct {
 	OptimizerForceClasses *bool `json:"OptimizerForceClasses,omitempty"`
 
 	// OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+	//
+	// 0 = Off
+	// 1 = Simple
+	// 2 = Prerendered
 	OptimizerHtmlToMarkdown *PullZoneAddModel_OptimizerHtmlToMarkdown `json:"OptimizerHtmlToMarkdown,omitempty"`
 
 	// OptimizerImageQuality Determines the image quality for desktop clients
@@ -3414,6 +3935,13 @@ type PullZoneAddModel struct {
 	OptimizerWatermarkOffset *float64 `json:"OptimizerWatermarkOffset,omitempty"`
 
 	// OptimizerWatermarkPosition Sets the position of the watermark image
+	//
+	// 0 = Bottom Left
+	// 1 = Bottom Right
+	// 2 = Top Left
+	// 3 = Top Right
+	// 4 = Center
+	// 5 = Center Stretch
 	OptimizerWatermarkPosition *PullZoneAddModel_OptimizerWatermarkPosition `json:"OptimizerWatermarkPosition,omitempty"`
 
 	// OptimizerWatermarkUrl Sets the URL of the watermark image
@@ -3459,6 +3987,14 @@ type PullZoneAddModel struct {
 	OriginShieldZoneCode *string `json:"OriginShieldZoneCode,omitempty"`
 
 	// OriginType Determine the type of the origin for this Pull Zone
+	//
+	// 0 = Origin URL
+	// 1 = DNS Accelerate
+	// 2 = Storage Zone
+	// 3 = Load Balancer
+	// 4 = Edge Script
+	// 5 = Magic Containers
+	// 6 = Push Zone
 	OriginType *PullZoneAddModel_OriginType `json:"OriginType,omitempty"`
 
 	// OriginUrl Sets the origin URL of the Pull Zone
@@ -3468,6 +4004,9 @@ type PullZoneAddModel struct {
 	PermaCacheStorageZoneId *int64 `json:"PermaCacheStorageZoneId,omitempty"`
 
 	// PermaCacheType Determines Perma-Cache behavior
+	//
+	// 0 = Automatic
+	// 1 = Manual
 	PermaCacheType *PullZoneAddModel_PermaCacheType `json:"PermaCacheType,omitempty"`
 
 	// PreloadingScreenCode The custom preloading screen coed
@@ -3489,6 +4028,9 @@ type PullZoneAddModel struct {
 	PreloadingScreenShowOnFirstVisit *bool `json:"PreloadingScreenShowOnFirstVisit,omitempty"`
 
 	// PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+	//
+	// 0 = Light
+	// 1 = Dark
 	PreloadingScreenTheme *PullZoneAddModel_PreloadingScreenTheme `json:"PreloadingScreenTheme,omitempty"`
 
 	// QueryStringVaryParameters Contains the list of vary parameters that will be used for vary cache by query string. Only alphanumeric characters, dashes and underscores are allowed (values that contain other characters are ignorred). If empty, all parameters will be used to construct the key.
@@ -3501,9 +4043,13 @@ type PullZoneAddModel struct {
 	RequestLimit *int32 `json:"RequestLimit,omitempty"`
 
 	// RoutingFilters The list of routing filters enabled for this zone
-	RoutingFilters              *[]string                                  `json:"RoutingFilters,omitempty"`
-	ShieldDDosProtectionEnabled *bool                                      `json:"ShieldDDosProtectionEnabled,omitempty"`
-	ShieldDDosProtectionType    *PullZoneAddModel_ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
+	RoutingFilters              *[]string `json:"RoutingFilters,omitempty"`
+	ShieldDDosProtectionEnabled *bool     `json:"ShieldDDosProtectionEnabled,omitempty"`
+
+	// ShieldDDosProtectionType 0 = Detect Only
+	// 1 = Active Standard
+	// 2 = Active Aggressive
+	ShieldDDosProtectionType *PullZoneAddModel_ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
 
 	// StickySessionClientHeaders A set of comma-separated header names used to identify clients
 	StickySessionClientHeaders *string `json:"StickySessionClientHeaders,omitempty"`
@@ -3512,15 +4058,25 @@ type PullZoneAddModel struct {
 	StickySessionCookieName *string `json:"StickySessionCookieName,omitempty"`
 
 	// StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+	//
+	// 0 = Off
+	// 1 = On
 	StickySessionType *PullZoneAddModel_StickySessionType `json:"StickySessionType,omitempty"`
 
 	// StorageZoneId The ID of the storage zone that will be used as the origin
 	StorageZoneId *int64 `json:"StorageZoneId,omitempty"`
 
 	// TlsSecurityLevel The minimum TLS security level enforced on this zone
+	//
+	// 0 = Legacy
+	// 1 = Compatible
+	// 2 = Modern Only
 	TlsSecurityLevel *PullZoneAddModel_TlsSecurityLevel `json:"TlsSecurityLevel,omitempty"`
 
 	// Type The type of the pull zone
+	//
+	// 0 = Premium
+	// 1 = Volume
 	Type *PullZoneAddModel_Type `json:"Type,omitempty"`
 
 	// UseBackgroundUpdate Determines if cache update is performed in the background.
@@ -3543,76 +4099,132 @@ type PullZoneAddModel struct {
 }
 
 // PullZoneAddModel_EdgeScriptExecutionPhase The execution phase of the edge script
+//
+// 0 = Cache
+// 1 = Load Balancer
+// 2 = Pre-Cache
 type PullZoneAddModel_EdgeScriptExecutionPhase struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack (default, best latency and compatibility), 2=DualStackPreferIPv6, 3=IPv6Only.
+//
+// 0 = IPv4 Only
+// 1 = Dual Stack
+// 2 = Dual Stack (Prefer IPv6)
+// 3 = IPv6 Only
 type PullZoneAddModel_IpFamilyPolicy struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_LogAnonymizationType Sets the log anonymization type for this pull zone
+//
+// 0 = One Digit
+// 1 = Drop
 type PullZoneAddModel_LogAnonymizationType struct {
 	union json.RawMessage
 }
 
-// PullZoneAddModel_LogFormat defines model for PullZoneAddModel.LogFormat.
+// PullZoneAddModel_LogFormat 0 = Plain
+// 1 = JSON
 type PullZoneAddModel_LogFormat struct {
 	union json.RawMessage
 }
 
-// PullZoneAddModel_LogForwardingFormat defines model for PullZoneAddModel.LogForwardingFormat.
+// PullZoneAddModel_LogForwardingFormat 0 = Plain
+// 1 = JSON
 type PullZoneAddModel_LogForwardingFormat struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_LogForwardingProtocol Sets the log forwarding protocol type
+//
+// 0 = UDP
+// 1 = TCP
+// 2 = TCP Encrypted
+// 3 = Datadog
 type PullZoneAddModel_LogForwardingProtocol struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+//
+// 0 = Off
+// 1 = Simple
+// 2 = Prerendered
 type PullZoneAddModel_OptimizerHtmlToMarkdown struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_OptimizerWatermarkPosition Sets the position of the watermark image
+//
+// 0 = Bottom Left
+// 1 = Bottom Right
+// 2 = Top Left
+// 3 = Top Right
+// 4 = Center
+// 5 = Center Stretch
 type PullZoneAddModel_OptimizerWatermarkPosition struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_OriginType Determine the type of the origin for this Pull Zone
+//
+// 0 = Origin URL
+// 1 = DNS Accelerate
+// 2 = Storage Zone
+// 3 = Load Balancer
+// 4 = Edge Script
+// 5 = Magic Containers
+// 6 = Push Zone
 type PullZoneAddModel_OriginType struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_PermaCacheType Determines Perma-Cache behavior
+//
+// 0 = Automatic
+// 1 = Manual
 type PullZoneAddModel_PermaCacheType struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+//
+// 0 = Light
+// 1 = Dark
 type PullZoneAddModel_PreloadingScreenTheme struct {
 	union json.RawMessage
 }
 
-// PullZoneAddModel_ShieldDDosProtectionType defines model for PullZoneAddModel.ShieldDDosProtectionType.
+// PullZoneAddModel_ShieldDDosProtectionType 0 = Detect Only
+// 1 = Active Standard
+// 2 = Active Aggressive
 type PullZoneAddModel_ShieldDDosProtectionType struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+//
+// 0 = Off
+// 1 = On
 type PullZoneAddModel_StickySessionType struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_TlsSecurityLevel The minimum TLS security level enforced on this zone
+//
+// 0 = Legacy
+// 1 = Compatible
+// 2 = Modern Only
 type PullZoneAddModel_TlsSecurityLevel struct {
 	union json.RawMessage
 }
 
 // PullZoneAddModel_Type The type of the pull zone
+//
+// 0 = Premium
+// 1 = Volume
 type PullZoneAddModel_Type struct {
 	union json.RawMessage
 }
@@ -3628,8 +4240,8 @@ type PullZoneLogFormat int
 
 // PullZoneLogForwarderProtocolType 0 = UDP
 // 1 = TCP
-// 2 = TCPEncrypted
-// 3 = DataDog
+// 2 = TCP Encrypted
+// 3 = Datadog
 type PullZoneLogForwarderProtocolType int
 
 // PullZoneModel defines model for PullZoneModel.
@@ -3733,6 +4345,10 @@ type PullZoneModel struct {
 	EdgeRules *[]EdgeRuleV2Model `json:"EdgeRules,omitempty"`
 
 	// EdgeScriptExecutionPhase The phase of the request where the script will be executed
+	//
+	// 0 = Cache
+	// 1 = Load Balancer
+	// 2 = Pre-Cache
 	EdgeScriptExecutionPhase *PullZoneModel_EdgeScriptExecutionPhase `json:"EdgeScriptExecutionPhase,omitempty"`
 
 	// EdgeScriptId The ID of the edge script that the pull zone is linked to
@@ -3843,6 +4459,11 @@ type PullZoneModel struct {
 	IgnoreQueryStrings *bool `json:"IgnoreQueryStrings,omitempty"`
 
 	// IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack, 2=DualStackPreferIPv6, 3=IPv6Only.
+	//
+	// 0 = IPv4 Only
+	// 1 = Dual Stack
+	// 2 = Dual Stack (Prefer IPv6)
+	// 3 = IPv6 Only
 	IpFamilyPolicy *PullZoneModel_IpFamilyPolicy `json:"IpFamilyPolicy,omitempty"`
 
 	// LimitRateAfter The amount of data after the rate limit will be activated
@@ -3855,18 +4476,21 @@ type PullZoneModel struct {
 	LoadBalancerId *int64 `json:"LoadBalancerId,omitempty"`
 
 	// LogAnonymizationType Gets the log anonymization type for this pull zone
+	//
+	// 0 = One Digit
+	// 1 = Drop
 	LogAnonymizationType *PullZoneModel_LogAnonymizationType `json:"LogAnonymizationType,omitempty"`
 
 	// LogFormat 0 = Plain
 	// 1 = JSON
-	LogFormat *PullZoneLogFormat `json:"LogFormat,omitempty"`
+	LogFormat *PullZoneModel_LogFormat `json:"LogFormat,omitempty"`
 
 	// LogForwardingEnabled Determines if the log forawrding is enabled
 	LogForwardingEnabled *bool `json:"LogForwardingEnabled,omitempty"`
 
 	// LogForwardingFormat 0 = Plain
 	// 1 = JSON
-	LogForwardingFormat *PullZoneLogFormat `json:"LogForwardingFormat,omitempty"`
+	LogForwardingFormat *PullZoneModel_LogForwardingFormat `json:"LogForwardingFormat,omitempty"`
 
 	// LogForwardingHostname The log forwarding hostname
 	LogForwardingHostname *string `json:"LogForwardingHostname,omitempty"`
@@ -3875,6 +4499,11 @@ type PullZoneModel struct {
 	LogForwardingPort *int32 `json:"LogForwardingPort,omitempty"`
 
 	// LogForwardingProtocol Determines the log forwarding protocol type
+	//
+	// 0 = UDP
+	// 1 = TCP
+	// 2 = TCP Encrypted
+	// 3 = Datadog
 	LogForwardingProtocol *PullZoneModel_LogForwardingProtocol `json:"LogForwardingProtocol,omitempty"`
 
 	// LogForwardingToken The log forwarding token value
@@ -3936,6 +4565,10 @@ type PullZoneModel struct {
 	OptimizerForceClasses *bool `json:"OptimizerForceClasses,omitempty"`
 
 	// OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+	//
+	// 0 = Off
+	// 1 = Simple
+	// 2 = Prerendered
 	OptimizerHtmlToMarkdown *PullZoneModel_OptimizerHtmlToMarkdown `json:"OptimizerHtmlToMarkdown,omitempty"`
 
 	// OptimizerImageQuality Determines the image quality for desktop clients
@@ -3987,6 +4620,13 @@ type PullZoneModel struct {
 	OptimizerWatermarkOffset *float64 `json:"OptimizerWatermarkOffset,omitempty"`
 
 	// OptimizerWatermarkPosition Sets the position of the watermark image
+	//
+	// 0 = Bottom Left
+	// 1 = Bottom Right
+	// 2 = Top Left
+	// 3 = Top Right
+	// 4 = Center
+	// 5 = Center Stretch
 	OptimizerWatermarkPosition *PullZoneModel_OptimizerWatermarkPosition `json:"OptimizerWatermarkPosition,omitempty"`
 
 	// OptimizerWatermarkUrl Sets the URL of the watermark image
@@ -4035,6 +4675,14 @@ type PullZoneModel struct {
 	OriginShieldZoneCode *string `json:"OriginShieldZoneCode,omitempty"`
 
 	// OriginType The type of the origin for this Pull Zone
+	//
+	// 0 = Origin URL
+	// 1 = DNS Accelerate
+	// 2 = Storage Zone
+	// 3 = Load Balancer
+	// 4 = Edge Script
+	// 5 = Magic Containers
+	// 6 = Push Zone
 	OriginType *PullZoneModel_OriginType `json:"OriginType,omitempty"`
 
 	// OriginUrl The origin URL of the pull zone where the files are fetched from.
@@ -4044,6 +4692,9 @@ type PullZoneModel struct {
 	PermaCacheStorageZoneId *int64 `json:"PermaCacheStorageZoneId,omitempty"`
 
 	// PermaCacheType Determines Perma-Cache behavior
+	//
+	// 0 = Automatic
+	// 1 = Manual
 	PermaCacheType *PullZoneModel_PermaCacheType `json:"PermaCacheType,omitempty"`
 
 	// PreloadingScreenCode The custom preloading screen code
@@ -4065,6 +4716,9 @@ type PullZoneModel struct {
 	PreloadingScreenShowOnFirstVisit *bool `json:"PreloadingScreenShowOnFirstVisit,omitempty"`
 
 	// PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+	//
+	// 0 = Light
+	// 1 = Dark
 	PreloadingScreenTheme *PullZoneModel_PreloadingScreenTheme `json:"PreloadingScreenTheme,omitempty"`
 
 	// PriceOverride The custom price override for this zone. Unit is $/Byte.
@@ -4083,10 +4737,10 @@ type PullZoneModel struct {
 	RoutingFilters              *[]string `json:"RoutingFilters,omitempty"`
 	ShieldDDosProtectionEnabled *bool     `json:"ShieldDDosProtectionEnabled,omitempty"`
 
-	// ShieldDDosProtectionType 0 = DetectOnly
-	// 1 = ActiveStandard
-	// 2 = ActiveAggressive
-	ShieldDDosProtectionType *ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
+	// ShieldDDosProtectionType 0 = Detect Only
+	// 1 = Active Standard
+	// 2 = Active Aggressive
+	ShieldDDosProtectionType *PullZoneModel_ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
 
 	// SouthAmericaDiscount The Pull Zone specific pricing discount for South America region.
 	SouthAmericaDiscount *int32 `json:"SouthAmericaDiscount,omitempty"`
@@ -4098,6 +4752,9 @@ type PullZoneModel struct {
 	StickySessionCookieName *string `json:"StickySessionCookieName,omitempty"`
 
 	// StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+	//
+	// 0 = Off
+	// 1 = On
 	StickySessionType *PullZoneModel_StickySessionType `json:"StickySessionType,omitempty"`
 
 	// StorageZoneId The ID of the storage zone that the pull zone is linked to
@@ -4105,9 +4762,16 @@ type PullZoneModel struct {
 	Suspended     *bool  `json:"Suspended,omitempty"`
 
 	// TlsSecurityLevel The minimum TLS security level enforced on the Pull Zone
+	//
+	// 0 = Legacy
+	// 1 = Compatible
+	// 2 = Modern Only
 	TlsSecurityLevel *PullZoneModel_TlsSecurityLevel `json:"TlsSecurityLevel,omitempty"`
 
 	// Type The type of the pull zone
+	//
+	// 0 = Premium
+	// 1 = Volume
 	Type *PullZoneModel_Type `json:"Type,omitempty"`
 
 	// UseBackgroundUpdate Determines if cache update is performed in the background.
@@ -4139,61 +4803,132 @@ type PullZoneModel struct {
 }
 
 // PullZoneModel_EdgeScriptExecutionPhase The phase of the request where the script will be executed
+//
+// 0 = Cache
+// 1 = Load Balancer
+// 2 = Pre-Cache
 type PullZoneModel_EdgeScriptExecutionPhase struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack, 2=DualStackPreferIPv6, 3=IPv6Only.
+//
+// 0 = IPv4 Only
+// 1 = Dual Stack
+// 2 = Dual Stack (Prefer IPv6)
+// 3 = IPv6 Only
 type PullZoneModel_IpFamilyPolicy struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_LogAnonymizationType Gets the log anonymization type for this pull zone
+//
+// 0 = One Digit
+// 1 = Drop
 type PullZoneModel_LogAnonymizationType struct {
 	union json.RawMessage
 }
 
+// PullZoneModel_LogFormat 0 = Plain
+// 1 = JSON
+type PullZoneModel_LogFormat struct {
+	union json.RawMessage
+}
+
+// PullZoneModel_LogForwardingFormat 0 = Plain
+// 1 = JSON
+type PullZoneModel_LogForwardingFormat struct {
+	union json.RawMessage
+}
+
 // PullZoneModel_LogForwardingProtocol Determines the log forwarding protocol type
+//
+// 0 = UDP
+// 1 = TCP
+// 2 = TCP Encrypted
+// 3 = Datadog
 type PullZoneModel_LogForwardingProtocol struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+//
+// 0 = Off
+// 1 = Simple
+// 2 = Prerendered
 type PullZoneModel_OptimizerHtmlToMarkdown struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_OptimizerWatermarkPosition Sets the position of the watermark image
+//
+// 0 = Bottom Left
+// 1 = Bottom Right
+// 2 = Top Left
+// 3 = Top Right
+// 4 = Center
+// 5 = Center Stretch
 type PullZoneModel_OptimizerWatermarkPosition struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_OriginType The type of the origin for this Pull Zone
+//
+// 0 = Origin URL
+// 1 = DNS Accelerate
+// 2 = Storage Zone
+// 3 = Load Balancer
+// 4 = Edge Script
+// 5 = Magic Containers
+// 6 = Push Zone
 type PullZoneModel_OriginType struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_PermaCacheType Determines Perma-Cache behavior
+//
+// 0 = Automatic
+// 1 = Manual
 type PullZoneModel_PermaCacheType struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+//
+// 0 = Light
+// 1 = Dark
 type PullZoneModel_PreloadingScreenTheme struct {
 	union json.RawMessage
 }
 
+// PullZoneModel_ShieldDDosProtectionType 0 = Detect Only
+// 1 = Active Standard
+// 2 = Active Aggressive
+type PullZoneModel_ShieldDDosProtectionType struct {
+	union json.RawMessage
+}
+
 // PullZoneModel_StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+//
+// 0 = Off
+// 1 = On
 type PullZoneModel_StickySessionType struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_TlsSecurityLevel The minimum TLS security level enforced on the Pull Zone
+//
+// 0 = Legacy
+// 1 = Compatible
+// 2 = Modern Only
 type PullZoneModel_TlsSecurityLevel struct {
 	union json.RawMessage
 }
 
 // PullZoneModel_Type The type of the pull zone
+//
+// 0 = Premium
+// 1 = Volume
 type PullZoneModel_Type struct {
 	union json.RawMessage
 }
@@ -4207,13 +4942,13 @@ type PullZoneOptimizerClassModel struct {
 	Properties *map[string]string `json:"Properties,omitempty"`
 }
 
-// PullZoneOriginType 0 = OriginUrl
-// 1 = DnsAccelerate
-// 2 = StorageZone
-// 3 = LoadBalancer
-// 4 = EdgeScript
-// 5 = MagicContainers
-// 6 = PushZone
+// PullZoneOriginType 0 = Origin URL
+// 1 = DNS Accelerate
+// 2 = Storage Zone
+// 3 = Load Balancer
+// 4 = Edge Script
+// 5 = Magic Containers
+// 6 = Push Zone
 type PullZoneOriginType int
 
 // PullZonePurgeModel defines model for PullZonePurgeModel.
@@ -4304,6 +5039,10 @@ type PullZoneSettingsModel struct {
 	DnsOriginScheme *string `json:"DnsOriginScheme,omitempty"`
 
 	// EdgeScriptExecutionPhase The execution phase of the edge script
+	//
+	// 0 = Cache
+	// 1 = Load Balancer
+	// 2 = Pre-Cache
 	EdgeScriptExecutionPhase *PullZoneSettingsModel_EdgeScriptExecutionPhase `json:"EdgeScriptExecutionPhase,omitempty"`
 
 	// EdgeScriptId The ID of the edge script that will be used as the origin
@@ -4400,6 +5139,11 @@ type PullZoneSettingsModel struct {
 	IgnoreQueryStrings *bool `json:"IgnoreQueryStrings,omitempty"`
 
 	// IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack (default, best latency and compatibility), 2=DualStackPreferIPv6, 3=IPv6Only.
+	//
+	// 0 = IPv4 Only
+	// 1 = Dual Stack
+	// 2 = Dual Stack (Prefer IPv6)
+	// 3 = IPv6 Only
 	IpFamilyPolicy *PullZoneSettingsModel_IpFamilyPolicy `json:"IpFamilyPolicy,omitempty"`
 
 	// LimitRateAfter Determines the amount of traffic transferred before the client is limited
@@ -4412,12 +5156,21 @@ type PullZoneSettingsModel struct {
 	LoadBalancerId *int64 `json:"LoadBalancerId,omitempty"`
 
 	// LogAnonymizationType Sets the log anonymization type for this pull zone
+	//
+	// 0 = One Digit
+	// 1 = Drop
 	LogAnonymizationType *PullZoneSettingsModel_LogAnonymizationType `json:"LogAnonymizationType,omitempty"`
-	LogFormat            *PullZoneSettingsModel_LogFormat            `json:"LogFormat,omitempty"`
+
+	// LogFormat 0 = Plain
+	// 1 = JSON
+	LogFormat *PullZoneSettingsModel_LogFormat `json:"LogFormat,omitempty"`
 
 	// LogForwardingEnabled Sets the log forwarding token for the zone
-	LogForwardingEnabled *bool                                      `json:"LogForwardingEnabled,omitempty"`
-	LogForwardingFormat  *PullZoneSettingsModel_LogForwardingFormat `json:"LogForwardingFormat,omitempty"`
+	LogForwardingEnabled *bool `json:"LogForwardingEnabled,omitempty"`
+
+	// LogForwardingFormat 0 = Plain
+	// 1 = JSON
+	LogForwardingFormat *PullZoneSettingsModel_LogForwardingFormat `json:"LogForwardingFormat,omitempty"`
 
 	// LogForwardingHostname Sets the log forwarding destination hostname for the zone
 	LogForwardingHostname *string `json:"LogForwardingHostname,omitempty"`
@@ -4426,6 +5179,11 @@ type PullZoneSettingsModel struct {
 	LogForwardingPort *int32 `json:"LogForwardingPort,omitempty"`
 
 	// LogForwardingProtocol Sets the log forwarding protocol type
+	//
+	// 0 = UDP
+	// 1 = TCP
+	// 2 = TCP Encrypted
+	// 3 = Datadog
 	LogForwardingProtocol *PullZoneSettingsModel_LogForwardingProtocol `json:"LogForwardingProtocol,omitempty"`
 
 	// LogForwardingToken Sets the log forwarding token for the zone
@@ -4476,6 +5234,10 @@ type PullZoneSettingsModel struct {
 	OptimizerForceClasses *bool `json:"OptimizerForceClasses,omitempty"`
 
 	// OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+	//
+	// 0 = Off
+	// 1 = Simple
+	// 2 = Prerendered
 	OptimizerHtmlToMarkdown *PullZoneSettingsModel_OptimizerHtmlToMarkdown `json:"OptimizerHtmlToMarkdown,omitempty"`
 
 	// OptimizerImageQuality Determines the image quality for desktop clients
@@ -4524,6 +5286,13 @@ type PullZoneSettingsModel struct {
 	OptimizerWatermarkOffset *float64 `json:"OptimizerWatermarkOffset,omitempty"`
 
 	// OptimizerWatermarkPosition Sets the position of the watermark image
+	//
+	// 0 = Bottom Left
+	// 1 = Bottom Right
+	// 2 = Top Left
+	// 3 = Top Right
+	// 4 = Center
+	// 5 = Center Stretch
 	OptimizerWatermarkPosition *PullZoneSettingsModel_OptimizerWatermarkPosition `json:"OptimizerWatermarkPosition,omitempty"`
 
 	// OptimizerWatermarkUrl Sets the URL of the watermark image
@@ -4569,6 +5338,14 @@ type PullZoneSettingsModel struct {
 	OriginShieldZoneCode *string `json:"OriginShieldZoneCode,omitempty"`
 
 	// OriginType Determine the type of the origin for this Pull Zone
+	//
+	// 0 = Origin URL
+	// 1 = DNS Accelerate
+	// 2 = Storage Zone
+	// 3 = Load Balancer
+	// 4 = Edge Script
+	// 5 = Magic Containers
+	// 6 = Push Zone
 	OriginType *PullZoneSettingsModel_OriginType `json:"OriginType,omitempty"`
 
 	// OriginUrl Sets the origin URL of the Pull Zone
@@ -4578,6 +5355,9 @@ type PullZoneSettingsModel struct {
 	PermaCacheStorageZoneId *int64 `json:"PermaCacheStorageZoneId,omitempty"`
 
 	// PermaCacheType Determines Perma-Cache behavior
+	//
+	// 0 = Automatic
+	// 1 = Manual
 	PermaCacheType *PullZoneSettingsModel_PermaCacheType `json:"PermaCacheType,omitempty"`
 
 	// PreloadingScreenCode The custom preloading screen coed
@@ -4599,6 +5379,9 @@ type PullZoneSettingsModel struct {
 	PreloadingScreenShowOnFirstVisit *bool `json:"PreloadingScreenShowOnFirstVisit,omitempty"`
 
 	// PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+	//
+	// 0 = Light
+	// 1 = Dark
 	PreloadingScreenTheme *PullZoneSettingsModel_PreloadingScreenTheme `json:"PreloadingScreenTheme,omitempty"`
 
 	// QueryStringVaryParameters Contains the list of vary parameters that will be used for vary cache by query string. Only alphanumeric characters, dashes and underscores are allowed (values that contain other characters are ignorred). If empty, all parameters will be used to construct the key.
@@ -4611,9 +5394,13 @@ type PullZoneSettingsModel struct {
 	RequestLimit *int32 `json:"RequestLimit,omitempty"`
 
 	// RoutingFilters The list of routing filters enabled for this zone
-	RoutingFilters              *[]string                                       `json:"RoutingFilters,omitempty"`
-	ShieldDDosProtectionEnabled *bool                                           `json:"ShieldDDosProtectionEnabled,omitempty"`
-	ShieldDDosProtectionType    *PullZoneSettingsModel_ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
+	RoutingFilters              *[]string `json:"RoutingFilters,omitempty"`
+	ShieldDDosProtectionEnabled *bool     `json:"ShieldDDosProtectionEnabled,omitempty"`
+
+	// ShieldDDosProtectionType 0 = Detect Only
+	// 1 = Active Standard
+	// 2 = Active Aggressive
+	ShieldDDosProtectionType *PullZoneSettingsModel_ShieldDDosProtectionType `json:"ShieldDDosProtectionType,omitempty"`
 
 	// StickySessionClientHeaders A set of comma-separated header names used to identify clients
 	StickySessionClientHeaders *string `json:"StickySessionClientHeaders,omitempty"`
@@ -4622,15 +5409,25 @@ type PullZoneSettingsModel struct {
 	StickySessionCookieName *string `json:"StickySessionCookieName,omitempty"`
 
 	// StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+	//
+	// 0 = Off
+	// 1 = On
 	StickySessionType *PullZoneSettingsModel_StickySessionType `json:"StickySessionType,omitempty"`
 
 	// StorageZoneId The ID of the storage zone that will be used as the origin
 	StorageZoneId *int64 `json:"StorageZoneId,omitempty"`
 
 	// TlsSecurityLevel The minimum TLS security level enforced on this zone
+	//
+	// 0 = Legacy
+	// 1 = Compatible
+	// 2 = Modern Only
 	TlsSecurityLevel *PullZoneSettingsModel_TlsSecurityLevel `json:"TlsSecurityLevel,omitempty"`
 
 	// Type The type of the pull zone
+	//
+	// 0 = Premium
+	// 1 = Volume
 	Type *PullZoneSettingsModel_Type `json:"Type,omitempty"`
 
 	// UseBackgroundUpdate Determines if cache update is performed in the background.
@@ -4653,76 +5450,132 @@ type PullZoneSettingsModel struct {
 }
 
 // PullZoneSettingsModel_EdgeScriptExecutionPhase The execution phase of the edge script
+//
+// 0 = Cache
+// 1 = Load Balancer
+// 2 = Pre-Cache
 type PullZoneSettingsModel_EdgeScriptExecutionPhase struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_IpFamilyPolicy Address-family policy: 0=IPv4Only, 1=DualStack (default, best latency and compatibility), 2=DualStackPreferIPv6, 3=IPv6Only.
+//
+// 0 = IPv4 Only
+// 1 = Dual Stack
+// 2 = Dual Stack (Prefer IPv6)
+// 3 = IPv6 Only
 type PullZoneSettingsModel_IpFamilyPolicy struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_LogAnonymizationType Sets the log anonymization type for this pull zone
+//
+// 0 = One Digit
+// 1 = Drop
 type PullZoneSettingsModel_LogAnonymizationType struct {
 	union json.RawMessage
 }
 
-// PullZoneSettingsModel_LogFormat defines model for PullZoneSettingsModel.LogFormat.
+// PullZoneSettingsModel_LogFormat 0 = Plain
+// 1 = JSON
 type PullZoneSettingsModel_LogFormat struct {
 	union json.RawMessage
 }
 
-// PullZoneSettingsModel_LogForwardingFormat defines model for PullZoneSettingsModel.LogForwardingFormat.
+// PullZoneSettingsModel_LogForwardingFormat 0 = Plain
+// 1 = JSON
 type PullZoneSettingsModel_LogForwardingFormat struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_LogForwardingProtocol Sets the log forwarding protocol type
+//
+// 0 = UDP
+// 1 = TCP
+// 2 = TCP Encrypted
+// 3 = Datadog
 type PullZoneSettingsModel_LogForwardingProtocol struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_OptimizerHtmlToMarkdown Determines if Markdown automatic generation for AI systems is enabled and which pipeline to use
+//
+// 0 = Off
+// 1 = Simple
+// 2 = Prerendered
 type PullZoneSettingsModel_OptimizerHtmlToMarkdown struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_OptimizerWatermarkPosition Sets the position of the watermark image
+//
+// 0 = Bottom Left
+// 1 = Bottom Right
+// 2 = Top Left
+// 3 = Top Right
+// 4 = Center
+// 5 = Center Stretch
 type PullZoneSettingsModel_OptimizerWatermarkPosition struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_OriginType Determine the type of the origin for this Pull Zone
+//
+// 0 = Origin URL
+// 1 = DNS Accelerate
+// 2 = Storage Zone
+// 3 = Load Balancer
+// 4 = Edge Script
+// 5 = Magic Containers
+// 6 = Push Zone
 type PullZoneSettingsModel_OriginType struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_PermaCacheType Determines Perma-Cache behavior
+//
+// 0 = Automatic
+// 1 = Manual
 type PullZoneSettingsModel_PermaCacheType struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_PreloadingScreenTheme The currently configured preloading screem theme. (0 - Light, 1 - Dark)
+//
+// 0 = Light
+// 1 = Dark
 type PullZoneSettingsModel_PreloadingScreenTheme struct {
 	union json.RawMessage
 }
 
-// PullZoneSettingsModel_ShieldDDosProtectionType defines model for PullZoneSettingsModel.ShieldDDosProtectionType.
+// PullZoneSettingsModel_ShieldDDosProtectionType 0 = Detect Only
+// 1 = Active Standard
+// 2 = Active Aggressive
 type PullZoneSettingsModel_ShieldDDosProtectionType struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_StickySessionType Whether to use a Sticky Session mechanism for this pull zone
+//
+// 0 = Off
+// 1 = On
 type PullZoneSettingsModel_StickySessionType struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_TlsSecurityLevel The minimum TLS security level enforced on this zone
+//
+// 0 = Legacy
+// 1 = Compatible
+// 2 = Modern Only
 type PullZoneSettingsModel_TlsSecurityLevel struct {
 	union json.RawMessage
 }
 
 // PullZoneSettingsModel_Type The type of the pull zone
+//
+// 0 = Premium
+// 1 = Volume
 type PullZoneSettingsModel_Type struct {
 	union json.RawMessage
 }
@@ -4841,9 +5694,9 @@ type SearchResultsModel struct {
 	Total *int32 `json:"Total,omitempty"`
 }
 
-// ShieldDDosProtectionType 0 = DetectOnly
-// 1 = ActiveStandard
-// 2 = ActiveAggressive
+// ShieldDDosProtectionType 0 = Detect Only
+// 1 = Active Standard
+// 2 = Active Aggressive
 type ShieldDDosProtectionType int
 
 // StandardOriginModel defines model for StandardOriginModel.
@@ -5054,21 +5907,33 @@ type StorageZoneModel struct {
 	StorageUsed *int64 `json:"StorageUsed,omitempty"`
 
 	// StorageZoneType The Storage Zone S3 support type
+	//
+	// 0 = Not Supported
+	// 1 = Supported
 	StorageZoneType *StorageZoneModel_StorageZoneType `json:"StorageZoneType,omitempty"`
 
 	// UserId The ID of the user that owns the storage zone
 	UserId *string `json:"UserId,omitempty"`
 
 	// ZoneTier Determines the storage zone tier that is storing the data
+	//
+	// 0 = Standard
+	// 1 = Edge (SSD)
 	ZoneTier *StorageZoneModel_ZoneTier `json:"ZoneTier,omitempty"`
 }
 
 // StorageZoneModel_StorageZoneType The Storage Zone S3 support type
+//
+// 0 = Not Supported
+// 1 = Supported
 type StorageZoneModel_StorageZoneType struct {
 	union json.RawMessage
 }
 
 // StorageZoneModel_ZoneTier Determines the storage zone tier that is storing the data
+//
+// 0 = Standard
+// 1 = Edge (SSD)
 type StorageZoneModel_ZoneTier struct {
 	union json.RawMessage
 }
@@ -5085,23 +5950,35 @@ type StorageZoneModelAdd struct {
 	ReplicationRegions *[]string `json:"ReplicationRegions,omitempty"`
 
 	// StorageZoneType The Storage Zone S3 support type
+	//
+	// 0 = Not Supported
+	// 1 = Supported
 	StorageZoneType *StorageZoneModelAdd_StorageZoneType `json:"StorageZoneType,omitempty"`
 
 	// ZoneTier Determines the storage zone tier that will be storing the data
+	//
+	// 0 = Standard
+	// 1 = Edge (SSD)
 	ZoneTier *StorageZoneModelAdd_ZoneTier `json:"ZoneTier,omitempty"`
 }
 
 // StorageZoneModelAdd_StorageZoneType The Storage Zone S3 support type
+//
+// 0 = Not Supported
+// 1 = Supported
 type StorageZoneModelAdd_StorageZoneType struct {
 	union json.RawMessage
 }
 
 // StorageZoneModelAdd_ZoneTier Determines the storage zone tier that will be storing the data
+//
+// 0 = Standard
+// 1 = Edge (SSD)
 type StorageZoneModelAdd_ZoneTier struct {
 	union json.RawMessage
 }
 
-// StorageZoneS3Type 0 = NotSupported
+// StorageZoneS3Type 0 = Not Supported
 // 1 = Supported
 type StorageZoneS3Type int
 
@@ -5130,12 +6007,12 @@ type StorageZoneStatisticsModel struct {
 }
 
 // StorageZoneTier 0 = Standard
-// 1 = Edge
+// 1 = Edge (SSD)
 type StorageZoneTier int
 
 // TlsSecurityLevelType 0 = Legacy
 // 1 = Compatible
-// 2 = ModernOnly
+// 2 = Modern Only
 type TlsSecurityLevelType int
 
 // ToggleRequestModel defines model for ToggleRequestModel.
@@ -5153,18 +6030,70 @@ type Trigger struct {
 	PatternMatches *[]string `json:"PatternMatches,omitempty"`
 
 	// PatternMatchingType The type of pattern matching
+	//
+	// 0 = Match Any
+	// 1 = Match All
+	// 2 = Match None
 	PatternMatchingType *Trigger_PatternMatchingType `json:"PatternMatchingType,omitempty"`
 
 	// Type The type of the trigger
+	//
+	// <details>
+	// <summary>Show all 14 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | URL |
+	// | `1` | Request Header |
+	// | `2` | Response Header |
+	// | `3` | URL Extension |
+	// | `4` | Country Code |
+	// | `5` | Remote IP |
+	// | `6` | URL Query String |
+	// | `7` | Random Chance |
+	// | `8` | Status Code |
+	// | `9` | Request Method |
+	// | `10` | Cookie Value |
+	// | `11` | Country State Code |
+	// | `12` | Origin Retry Attempt Count |
+	// | `13` | Origin Connection Error |
+	//
+	// </details>
 	Type *Trigger_Type `json:"Type,omitempty"`
 }
 
 // Trigger_PatternMatchingType The type of pattern matching
+//
+// 0 = Match Any
+// 1 = Match All
+// 2 = Match None
 type Trigger_PatternMatchingType struct {
 	union json.RawMessage
 }
 
 // Trigger_Type The type of the trigger
+//
+// <details>
+// <summary>Show all 14 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | URL |
+// | `1` | Request Header |
+// | `2` | Response Header |
+// | `3` | URL Extension |
+// | `4` | Country Code |
+// | `5` | Remote IP |
+// | `6` | URL Query String |
+// | `7` | Random Chance |
+// | `8` | Status Code |
+// | `9` | Request Method |
+// | `10` | Cookie Value |
+// | `11` | Country State Code |
+// | `12` | Origin Retry Attempt Count |
+// | `13` | Origin Connection Error |
+//
+// </details>
 type Trigger_Type struct {
 	union json.RawMessage
 }
@@ -5178,64 +6107,124 @@ type TriggerDnsZoneRecordScanRequest struct {
 	ZoneId *int64 `json:"ZoneId,omitempty"`
 }
 
-// TriggerMatchingTypes 0 = MatchAny
-// 1 = MatchAll
-// 2 = MatchNone
+// TriggerMatchingTypes 0 = Match Any
+// 1 = Match All
+// 2 = Match None
 type TriggerMatchingTypes int
 
-// TriggerTypes 0 = Url
-// 1 = RequestHeader
-// 2 = ResponseHeader
-// 3 = UrlExtension
-// 4 = CountryCode
-// 5 = RemoteIP
-// 6 = UrlQueryString
-// 7 = RandomChance
-// 8 = StatusCode
-// 9 = RequestMethod
-// 10 = CookieValue
-// 11 = CountryStateCode
-// 12 = OriginRetryAttemptCount
-// 13 = OriginConnectionError
+// TriggerTypes 0 = URL
+// 1 = Request Header
+// 2 = Response Header
+// 3 = URL Extension
+// 4 = Country Code
+// 5 = Remote IP
+// 6 = URL Query String
+// 7 = Random Chance
+// 8 = Status Code
+// 9 = Request Method
+// 10 = Cookie Value
+// 11 = Country State Code
+// 12 = Origin Retry Attempt Count
+// 13 = Origin Connection Error
 type TriggerTypes int
 
 // UpdateDnsRecordModel defines model for UpdateDnsRecordModel.
 type UpdateDnsRecordModel struct {
-	Accelerated           *bool                                  `json:"Accelerated,omitempty"`
-	AutoSslIssuance       *bool                                  `json:"AutoSslIssuance,omitempty"`
-	Comment               *string                                `json:"Comment,omitempty"`
-	Disabled              *bool                                  `json:"Disabled,omitempty"`
-	EnviromentalVariables *[]DnsRecordEnviromentalVariableModel  `json:"EnviromentalVariables,omitempty"`
-	Flags                 *int                                   `json:"Flags,omitempty"`
-	GeolocationLatitude   *float64                               `json:"GeolocationLatitude,omitempty"`
-	GeolocationLongitude  *float64                               `json:"GeolocationLongitude,omitempty"`
-	Id                    *int64                                 `json:"Id,omitempty"`
-	LatencyZone           *string                                `json:"LatencyZone,omitempty"`
-	MonitorType           *UpdateDnsRecordModel_MonitorType      `json:"MonitorType,omitempty"`
-	Name                  *string                                `json:"Name,omitempty"`
-	Port                  *int32                                 `json:"Port,omitempty"`
-	Priority              *int32                                 `json:"Priority,omitempty"`
-	PullZoneId            *int64                                 `json:"PullZoneId,omitempty"`
-	ScriptId              *int64                                 `json:"ScriptId,omitempty"`
-	SmartRoutingType      *UpdateDnsRecordModel_SmartRoutingType `json:"SmartRoutingType,omitempty"`
-	Tag                   *string                                `json:"Tag,omitempty"`
-	Ttl                   *int32                                 `json:"Ttl,omitempty"`
-	Type                  *UpdateDnsRecordModel_Type             `json:"Type,omitempty"`
-	Value                 *string                                `json:"Value,omitempty"`
-	Weight                *int32                                 `json:"Weight,omitempty"`
+	Accelerated           *bool                                 `json:"Accelerated,omitempty"`
+	AutoSslIssuance       *bool                                 `json:"AutoSslIssuance,omitempty"`
+	Comment               *string                               `json:"Comment,omitempty"`
+	Disabled              *bool                                 `json:"Disabled,omitempty"`
+	EnviromentalVariables *[]DnsRecordEnviromentalVariableModel `json:"EnviromentalVariables,omitempty"`
+	Flags                 *int                                  `json:"Flags,omitempty"`
+	GeolocationLatitude   *float64                              `json:"GeolocationLatitude,omitempty"`
+	GeolocationLongitude  *float64                              `json:"GeolocationLongitude,omitempty"`
+	Id                    *int64                                `json:"Id,omitempty"`
+	LatencyZone           *string                               `json:"LatencyZone,omitempty"`
+
+	// MonitorType 0 = None
+	// 1 = Ping
+	// 2 = HTTP
+	// 3 = Monitor
+	MonitorType *UpdateDnsRecordModel_MonitorType `json:"MonitorType,omitempty"`
+	Name        *string                           `json:"Name,omitempty"`
+	Port        *int32                            `json:"Port,omitempty"`
+	Priority    *int32                            `json:"Priority,omitempty"`
+	PullZoneId  *int64                            `json:"PullZoneId,omitempty"`
+	ScriptId    *int64                            `json:"ScriptId,omitempty"`
+
+	// SmartRoutingType 0 = None
+	// 1 = Latency
+	// 2 = Geolocation
+	SmartRoutingType *UpdateDnsRecordModel_SmartRoutingType `json:"SmartRoutingType,omitempty"`
+	Tag              *string                                `json:"Tag,omitempty"`
+	Ttl              *int32                                 `json:"Ttl,omitempty"`
+
+	// Type <details>
+	// <summary>Show all 16 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | A |
+	// | `1` | AAAA |
+	// | `2` | CNAME |
+	// | `3` | TXT |
+	// | `4` | MX |
+	// | `5` | Redirect |
+	// | `6` | Flatten |
+	// | `7` | Pull Zone |
+	// | `8` | SRV |
+	// | `9` | CAA |
+	// | `10` | PTR |
+	// | `11` | Script |
+	// | `12` | NS |
+	// | `13` | SVCB |
+	// | `14` | HTTPS |
+	// | `15` | TLSA |
+	//
+	// </details>
+	Type   *UpdateDnsRecordModel_Type `json:"Type,omitempty"`
+	Value  *string                    `json:"Value,omitempty"`
+	Weight *int32                     `json:"Weight,omitempty"`
 }
 
-// UpdateDnsRecordModel_MonitorType defines model for UpdateDnsRecordModel.MonitorType.
+// UpdateDnsRecordModel_MonitorType 0 = None
+// 1 = Ping
+// 2 = HTTP
+// 3 = Monitor
 type UpdateDnsRecordModel_MonitorType struct {
 	union json.RawMessage
 }
 
-// UpdateDnsRecordModel_SmartRoutingType defines model for UpdateDnsRecordModel.SmartRoutingType.
+// UpdateDnsRecordModel_SmartRoutingType 0 = None
+// 1 = Latency
+// 2 = Geolocation
 type UpdateDnsRecordModel_SmartRoutingType struct {
 	union json.RawMessage
 }
 
-// UpdateDnsRecordModel_Type defines model for UpdateDnsRecordModel.Type.
+// UpdateDnsRecordModel_Type <details>
+// <summary>Show all 16 values</summary>
+//
+// | Value | Name |
+// |---|---|
+// | `0` | A |
+// | `1` | AAAA |
+// | `2` | CNAME |
+// | `3` | TXT |
+// | `4` | MX |
+// | `5` | Redirect |
+// | `6` | Flatten |
+// | `7` | Pull Zone |
+// | `8` | SRV |
+// | `9` | CAA |
+// | `10` | PTR |
+// | `11` | Script |
+// | `12` | NS |
+// | `13` | SVCB |
+// | `14` | HTTPS |
+// | `15` | TLSA |
+//
+// </details>
 type UpdateDnsRecordModel_Type struct {
 	union json.RawMessage
 }
@@ -5243,10 +6232,16 @@ type UpdateDnsRecordModel_Type struct {
 // UpdateDnsZoneModel defines model for UpdateDnsZoneModel.
 type UpdateDnsZoneModel struct {
 	// CertificateKeyType Sets the certificate private key type for wildcard certificates for this zone
+	//
+	// 0 = ECDSA
+	// 1 = RSA
 	CertificateKeyType       *UpdateDnsZoneModel_CertificateKeyType `json:"CertificateKeyType,omitempty"`
 	CustomNameserversEnabled *bool                                  `json:"CustomNameserversEnabled,omitempty"`
 
 	// LogAnonymizationType Gets the log anonymization type for this zone
+	//
+	// 0 = One Digit
+	// 1 = Drop
 	LogAnonymizationType *UpdateDnsZoneModel_LogAnonymizationType `json:"LogAnonymizationType,omitempty"`
 	LoggingEnabled       *bool                                    `json:"LoggingEnabled,omitempty"`
 
@@ -5258,11 +6253,17 @@ type UpdateDnsZoneModel struct {
 }
 
 // UpdateDnsZoneModel_CertificateKeyType Sets the certificate private key type for wildcard certificates for this zone
+//
+// 0 = ECDSA
+// 1 = RSA
 type UpdateDnsZoneModel_CertificateKeyType struct {
 	union json.RawMessage
 }
 
 // UpdateDnsZoneModel_LogAnonymizationType Gets the log anonymization type for this zone
+//
+// 0 = One Digit
+// 1 = Drop
 type UpdateDnsZoneModel_LogAnonymizationType struct {
 	union json.RawMessage
 }
@@ -5352,6 +6353,9 @@ type VideoLibraryCreateModel struct {
 	EnabledResolutions *string `json:"EnabledResolutions,omitempty"`
 
 	// EncodingTier (Optional) Defines encoding tier. Premium is a paid tier that offers prioritized encoding and extra codec support.
+	//
+	// 0 = Free
+	// 1 = Premium
 	EncodingTier *VideoLibraryCreateModel_EncodingTier `json:"EncodingTier,omitempty"`
 
 	// JitEncodingEnabled (Optional) Determines whether JIT encoding should be used for the library. Supported in premium encoding only.
@@ -5377,6 +6381,9 @@ type VideoLibraryCreateModel struct {
 }
 
 // VideoLibraryCreateModel_EncodingTier (Optional) Defines encoding tier. Premium is a paid tier that offers prioritized encoding and extra codec support.
+//
+// 0 = Free
+// 1 = Premium
 type VideoLibraryCreateModel_EncodingTier struct {
 	union json.RawMessage
 }
@@ -5470,6 +6477,10 @@ type VideoLibraryModel struct {
 	DrmCostPerLicenseOverride *float64 `json:"DrmCostPerLicenseOverride,omitempty"`
 
 	// DrmVersion DRM version (basic or enterprise)
+	//
+	// 0 = Basic
+	// 1 = Enterprise
+	// 2 = Basic V2
 	DrmVersion *VideoLibraryModel_DrmVersion `json:"DrmVersion,omitempty"`
 
 	// EnableCaptionsInPlaylist Determines if any associated captions will be automatically signaled in the HLS master playlist via EXT-X-MEDIA tags, allowing client players to show captions.
@@ -5509,6 +6520,9 @@ type VideoLibraryModel struct {
 	EnabledResolutions *string `json:"EnabledResolutions,omitempty"`
 
 	// EncodingTier Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
+	//
+	// 0 = Free
+	// 1 = Premium
 	EncodingTier *VideoLibraryModel_EncodingTier `json:"EncodingTier,omitempty"`
 
 	// ExposeOriginals Marks whether original video files are exposed via CDN. Always false while EnableDRM is true; original files are not protected by DRM.
@@ -5564,6 +6578,9 @@ type VideoLibraryModel struct {
 	PullZoneId *int64 `json:"PullZoneId,omitempty"`
 
 	// PullZoneType The type of the pull zone attached
+	//
+	// 0 = Premium
+	// 1 = Volume
 	PullZoneType *VideoLibraryModel_PullZoneType `json:"PullZoneType,omitempty"`
 
 	// ReadOnlyApiKey The read-only API key used for authenticating with the video library
@@ -5638,11 +6655,18 @@ type VideoLibraryModel_AppleFairPlayDrm struct {
 }
 
 // VideoLibraryModel_DrmVersion DRM version (basic or enterprise)
+//
+// 0 = Basic
+// 1 = Enterprise
+// 2 = Basic V2
 type VideoLibraryModel_DrmVersion struct {
 	union json.RawMessage
 }
 
 // VideoLibraryModel_EncodingTier Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
+//
+// 0 = Free
+// 1 = Premium
 type VideoLibraryModel_EncodingTier struct {
 	union json.RawMessage
 }
@@ -5658,6 +6682,9 @@ type VideoLibraryModel_GoogleWidevineDrm struct {
 }
 
 // VideoLibraryModel_PullZoneType The type of the pull zone attached
+//
+// 0 = Premium
+// 1 = Volume
 type VideoLibraryModel_PullZoneType struct {
 	union json.RawMessage
 }
@@ -5719,6 +6746,10 @@ type VideoLibraryUpdateModel struct {
 	CustomHTML *string `json:"CustomHTML,omitempty"`
 
 	// DrmVersion (Optional) Determines MediaCage DRM version to be used for this library
+	//
+	// 0 = Basic
+	// 1 = Enterprise
+	// 2 = Basic V2
 	DrmVersion *VideoLibraryUpdateModel_DrmVersion `json:"DrmVersion,omitempty"`
 
 	// EnableCaptionsInPlaylist (Optional) Determines if any associated captions will be automatically signaled in the HLS master playlist via EXT-X-MEDIA tags, allowing client players to show captions.
@@ -5764,6 +6795,9 @@ type VideoLibraryUpdateModel struct {
 	EnabledResolutions *string `json:"EnabledResolutions,omitempty"`
 
 	// EncodingTier (Optional) Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
+	//
+	// 0 = Free
+	// 1 = Premium
 	EncodingTier *VideoLibraryUpdateModel_EncodingTier `json:"EncodingTier,omitempty"`
 
 	// ExposeOriginals (Optional) Marks whether original video files should be exposed via CDN. Original files are not protected by DRM, so this cannot be true while EnableDRM is true, and EnableDRM cannot be set to true while this is true. Setting AllowEarlyPlay to true sets this to true.
@@ -5857,11 +6891,18 @@ type VideoLibraryUpdateModel_AppleFairPlayDrm struct {
 }
 
 // VideoLibraryUpdateModel_DrmVersion (Optional) Determines MediaCage DRM version to be used for this library
+//
+// 0 = Basic
+// 1 = Enterprise
+// 2 = Basic V2
 type VideoLibraryUpdateModel_DrmVersion struct {
 	union json.RawMessage
 }
 
 // VideoLibraryUpdateModel_EncodingTier (Optional) Defines encoding tier to be used with video library. premium is a paid tier that offers either JIT encoding or prioritized encoding and extra codec support.
+//
+// 0 = Free
+// 1 = Premium
 type VideoLibraryUpdateModel_EncodingTier struct {
 	union json.RawMessage
 }
@@ -5901,13 +6942,18 @@ type DnsZonePublicIndexParams struct {
 
 	// Search The search term that will be used to filter the results
 	Search *string `form:"search,omitempty" json:"search,omitempty"`
-	View   *struct {
+
+	// View 0 = Full
+	// 1 = Lite
+	View *struct {
 		union json.RawMessage
 	} `form:"view,omitempty" json:"view,omitempty"`
 }
 
 // DnsZonePublicIndex2Params defines parameters for DnsZonePublicIndex2.
 type DnsZonePublicIndex2Params struct {
+	// View 0 = Full
+	// 1 = Lite
 	View *struct {
 		union json.RawMessage
 	} `form:"view,omitempty" json:"view,omitempty"`
@@ -5933,6 +6979,30 @@ type DnsZonePublicListDnsZoneRecordsParams struct {
 	PerPage *int32 `form:"perPage,omitempty" json:"perPage,omitempty"`
 
 	// Type The type of DNS Record
+	//
+	// <details>
+	// <summary>Show all 16 values</summary>
+	//
+	// | Value | Name |
+	// |---|---|
+	// | `0` | A |
+	// | `1` | AAAA |
+	// | `2` | CNAME |
+	// | `3` | TXT |
+	// | `4` | MX |
+	// | `5` | Redirect |
+	// | `6` | Flatten |
+	// | `7` | Pull Zone |
+	// | `8` | SRV |
+	// | `9` | CAA |
+	// | `10` | PTR |
+	// | `11` | Script |
+	// | `12` | NS |
+	// | `13` | SVCB |
+	// | `14` | HTTPS |
+	// | `15` | TLSA |
+	//
+	// </details>
 	Type *struct {
 		union json.RawMessage
 	} `form:"type,omitempty" json:"type,omitempty"`
@@ -6993,6 +8063,42 @@ func (t *BillingRecordModel_Type) UnmarshalJSON(b []byte) error {
 	return err
 }
 
+// AsAcceleratedStatus returns the union data inside the DnsRecordModel_AccelerationStatus as a AcceleratedStatus
+func (t DnsRecordModel_AccelerationStatus) AsAcceleratedStatus() (AcceleratedStatus, error) {
+	var body AcceleratedStatus
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAcceleratedStatus overwrites any union data inside the DnsRecordModel_AccelerationStatus as the provided AcceleratedStatus
+func (t *DnsRecordModel_AccelerationStatus) FromAcceleratedStatus(v AcceleratedStatus) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAcceleratedStatus performs a merge with any union data inside the DnsRecordModel_AccelerationStatus, using the provided AcceleratedStatus
+func (t *DnsRecordModel_AccelerationStatus) MergeAcceleratedStatus(v AcceleratedStatus) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsRecordModel_AccelerationStatus) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsRecordModel_AccelerationStatus) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsDnsRecordGeoLocationInfo returns the union data inside the DnsRecordModel_GeolocationInfo as a DnsRecordGeoLocationInfo
 func (t DnsRecordModel_GeolocationInfo) AsDnsRecordGeoLocationInfo() (DnsRecordGeoLocationInfo, error) {
 	var body DnsRecordGeoLocationInfo
@@ -7061,6 +8167,150 @@ func (t DnsRecordModel_IPGeoLocationInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DnsRecordModel_IPGeoLocationInfo) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsMonitoringStatus returns the union data inside the DnsRecordModel_MonitorStatus as a DnsMonitoringStatus
+func (t DnsRecordModel_MonitorStatus) AsDnsMonitoringStatus() (DnsMonitoringStatus, error) {
+	var body DnsMonitoringStatus
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsMonitoringStatus overwrites any union data inside the DnsRecordModel_MonitorStatus as the provided DnsMonitoringStatus
+func (t *DnsRecordModel_MonitorStatus) FromDnsMonitoringStatus(v DnsMonitoringStatus) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsMonitoringStatus performs a merge with any union data inside the DnsRecordModel_MonitorStatus, using the provided DnsMonitoringStatus
+func (t *DnsRecordModel_MonitorStatus) MergeDnsMonitoringStatus(v DnsMonitoringStatus) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsRecordModel_MonitorStatus) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsRecordModel_MonitorStatus) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsMonitoringType returns the union data inside the DnsRecordModel_MonitorType as a DnsMonitoringType
+func (t DnsRecordModel_MonitorType) AsDnsMonitoringType() (DnsMonitoringType, error) {
+	var body DnsMonitoringType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsMonitoringType overwrites any union data inside the DnsRecordModel_MonitorType as the provided DnsMonitoringType
+func (t *DnsRecordModel_MonitorType) FromDnsMonitoringType(v DnsMonitoringType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsMonitoringType performs a merge with any union data inside the DnsRecordModel_MonitorType, using the provided DnsMonitoringType
+func (t *DnsRecordModel_MonitorType) MergeDnsMonitoringType(v DnsMonitoringType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsRecordModel_MonitorType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsRecordModel_MonitorType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsSmartRoutingType returns the union data inside the DnsRecordModel_SmartRoutingType as a DnsSmartRoutingType
+func (t DnsRecordModel_SmartRoutingType) AsDnsSmartRoutingType() (DnsSmartRoutingType, error) {
+	var body DnsSmartRoutingType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsSmartRoutingType overwrites any union data inside the DnsRecordModel_SmartRoutingType as the provided DnsSmartRoutingType
+func (t *DnsRecordModel_SmartRoutingType) FromDnsSmartRoutingType(v DnsSmartRoutingType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsSmartRoutingType performs a merge with any union data inside the DnsRecordModel_SmartRoutingType, using the provided DnsSmartRoutingType
+func (t *DnsRecordModel_SmartRoutingType) MergeDnsSmartRoutingType(v DnsSmartRoutingType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsRecordModel_SmartRoutingType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsRecordModel_SmartRoutingType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsRecordTypes returns the union data inside the DnsRecordModel_Type as a DnsRecordTypes
+func (t DnsRecordModel_Type) AsDnsRecordTypes() (DnsRecordTypes, error) {
+	var body DnsRecordTypes
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsRecordTypes overwrites any union data inside the DnsRecordModel_Type as the provided DnsRecordTypes
+func (t *DnsRecordModel_Type) FromDnsRecordTypes(v DnsRecordTypes) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsRecordTypes performs a merge with any union data inside the DnsRecordModel_Type, using the provided DnsRecordTypes
+func (t *DnsRecordModel_Type) MergeDnsRecordTypes(v DnsRecordTypes) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsRecordModel_Type) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsRecordModel_Type) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -7169,6 +8419,114 @@ func (t DnsZoneModel_LogAnonymizationType) MarshalJSON() ([]byte, error) {
 }
 
 func (t *DnsZoneModel_LogAnonymizationType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsZoneScanJobStatus returns the union data inside the DnsZoneRecordScanJobResponse_Status as a DnsZoneScanJobStatus
+func (t DnsZoneRecordScanJobResponse_Status) AsDnsZoneScanJobStatus() (DnsZoneScanJobStatus, error) {
+	var body DnsZoneScanJobStatus
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsZoneScanJobStatus overwrites any union data inside the DnsZoneRecordScanJobResponse_Status as the provided DnsZoneScanJobStatus
+func (t *DnsZoneRecordScanJobResponse_Status) FromDnsZoneScanJobStatus(v DnsZoneScanJobStatus) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsZoneScanJobStatus performs a merge with any union data inside the DnsZoneRecordScanJobResponse_Status, using the provided DnsZoneScanJobStatus
+func (t *DnsZoneRecordScanJobResponse_Status) MergeDnsZoneScanJobStatus(v DnsZoneScanJobStatus) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsZoneRecordScanJobResponse_Status) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsZoneRecordScanJobResponse_Status) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDnsZoneScanJobStatus returns the union data inside the DnsZoneRecordScanTriggerResponse_Status as a DnsZoneScanJobStatus
+func (t DnsZoneRecordScanTriggerResponse_Status) AsDnsZoneScanJobStatus() (DnsZoneScanJobStatus, error) {
+	var body DnsZoneScanJobStatus
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDnsZoneScanJobStatus overwrites any union data inside the DnsZoneRecordScanTriggerResponse_Status as the provided DnsZoneScanJobStatus
+func (t *DnsZoneRecordScanTriggerResponse_Status) FromDnsZoneScanJobStatus(v DnsZoneScanJobStatus) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDnsZoneScanJobStatus performs a merge with any union data inside the DnsZoneRecordScanTriggerResponse_Status, using the provided DnsZoneScanJobStatus
+func (t *DnsZoneRecordScanTriggerResponse_Status) MergeDnsZoneScanJobStatus(v DnsZoneScanJobStatus) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DnsZoneRecordScanTriggerResponse_Status) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DnsZoneRecordScanTriggerResponse_Status) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsEdgeRuleActionType returns the union data inside the EdgeRuleV2ActionModel_ActionType as a EdgeRuleActionType
+func (t EdgeRuleV2ActionModel_ActionType) AsEdgeRuleActionType() (EdgeRuleActionType, error) {
+	var body EdgeRuleActionType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEdgeRuleActionType overwrites any union data inside the EdgeRuleV2ActionModel_ActionType as the provided EdgeRuleActionType
+func (t *EdgeRuleV2ActionModel_ActionType) FromEdgeRuleActionType(v EdgeRuleActionType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeEdgeRuleActionType performs a merge with any union data inside the EdgeRuleV2ActionModel_ActionType, using the provided EdgeRuleActionType
+func (t *EdgeRuleV2ActionModel_ActionType) MergeEdgeRuleActionType(v EdgeRuleActionType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t EdgeRuleV2ActionModel_ActionType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *EdgeRuleV2ActionModel_ActionType) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -7965,6 +9323,78 @@ func (t *OriginGroupCreateModel_OriginLoadBalancingMethod) UnmarshalJSON(b []byt
 	return err
 }
 
+// AsAppliedPricingType returns the union data inside the PriceEstimationModel_PricingType as a AppliedPricingType
+func (t PriceEstimationModel_PricingType) AsAppliedPricingType() (AppliedPricingType, error) {
+	var body AppliedPricingType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAppliedPricingType overwrites any union data inside the PriceEstimationModel_PricingType as the provided AppliedPricingType
+func (t *PriceEstimationModel_PricingType) FromAppliedPricingType(v AppliedPricingType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAppliedPricingType performs a merge with any union data inside the PriceEstimationModel_PricingType, using the provided AppliedPricingType
+func (t *PriceEstimationModel_PricingType) MergeAppliedPricingType(v AppliedPricingType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t PriceEstimationModel_PricingType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *PriceEstimationModel_PricingType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsPrivateKeyType returns the union data inside the PrivateKeyUpdateModel_KeyType as a PrivateKeyType
+func (t PrivateKeyUpdateModel_KeyType) AsPrivateKeyType() (PrivateKeyType, error) {
+	var body PrivateKeyType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPrivateKeyType overwrites any union data inside the PrivateKeyUpdateModel_KeyType as the provided PrivateKeyType
+func (t *PrivateKeyUpdateModel_KeyType) FromPrivateKeyType(v PrivateKeyType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePrivateKeyType performs a merge with any union data inside the PrivateKeyUpdateModel_KeyType, using the provided PrivateKeyType
+func (t *PrivateKeyUpdateModel_KeyType) MergePrivateKeyType(v PrivateKeyType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t PrivateKeyUpdateModel_KeyType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *PrivateKeyUpdateModel_KeyType) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsExecutionPhase returns the union data inside the PullZoneAddModel_EdgeScriptExecutionPhase as a ExecutionPhase
 func (t PullZoneAddModel_EdgeScriptExecutionPhase) AsExecutionPhase() (ExecutionPhase, error) {
 	var body ExecutionPhase
@@ -8613,6 +10043,78 @@ func (t *PullZoneModel_LogAnonymizationType) UnmarshalJSON(b []byte) error {
 	return err
 }
 
+// AsPullZoneLogFormat returns the union data inside the PullZoneModel_LogFormat as a PullZoneLogFormat
+func (t PullZoneModel_LogFormat) AsPullZoneLogFormat() (PullZoneLogFormat, error) {
+	var body PullZoneLogFormat
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPullZoneLogFormat overwrites any union data inside the PullZoneModel_LogFormat as the provided PullZoneLogFormat
+func (t *PullZoneModel_LogFormat) FromPullZoneLogFormat(v PullZoneLogFormat) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePullZoneLogFormat performs a merge with any union data inside the PullZoneModel_LogFormat, using the provided PullZoneLogFormat
+func (t *PullZoneModel_LogFormat) MergePullZoneLogFormat(v PullZoneLogFormat) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t PullZoneModel_LogFormat) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *PullZoneModel_LogFormat) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsPullZoneLogFormat returns the union data inside the PullZoneModel_LogForwardingFormat as a PullZoneLogFormat
+func (t PullZoneModel_LogForwardingFormat) AsPullZoneLogFormat() (PullZoneLogFormat, error) {
+	var body PullZoneLogFormat
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPullZoneLogFormat overwrites any union data inside the PullZoneModel_LogForwardingFormat as the provided PullZoneLogFormat
+func (t *PullZoneModel_LogForwardingFormat) FromPullZoneLogFormat(v PullZoneLogFormat) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePullZoneLogFormat performs a merge with any union data inside the PullZoneModel_LogForwardingFormat, using the provided PullZoneLogFormat
+func (t *PullZoneModel_LogForwardingFormat) MergePullZoneLogFormat(v PullZoneLogFormat) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t PullZoneModel_LogForwardingFormat) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *PullZoneModel_LogForwardingFormat) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsPullZoneLogForwarderProtocolType returns the union data inside the PullZoneModel_LogForwardingProtocol as a PullZoneLogForwarderProtocolType
 func (t PullZoneModel_LogForwardingProtocol) AsPullZoneLogForwarderProtocolType() (PullZoneLogForwarderProtocolType, error) {
 	var body PullZoneLogForwarderProtocolType
@@ -8825,6 +10327,42 @@ func (t PullZoneModel_PreloadingScreenTheme) MarshalJSON() ([]byte, error) {
 }
 
 func (t *PullZoneModel_PreloadingScreenTheme) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsShieldDDosProtectionType returns the union data inside the PullZoneModel_ShieldDDosProtectionType as a ShieldDDosProtectionType
+func (t PullZoneModel_ShieldDDosProtectionType) AsShieldDDosProtectionType() (ShieldDDosProtectionType, error) {
+	var body ShieldDDosProtectionType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromShieldDDosProtectionType overwrites any union data inside the PullZoneModel_ShieldDDosProtectionType as the provided ShieldDDosProtectionType
+func (t *PullZoneModel_ShieldDDosProtectionType) FromShieldDDosProtectionType(v ShieldDDosProtectionType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeShieldDDosProtectionType performs a merge with any union data inside the PullZoneModel_ShieldDDosProtectionType, using the provided ShieldDDosProtectionType
+func (t *PullZoneModel_ShieldDDosProtectionType) MergeShieldDDosProtectionType(v ShieldDDosProtectionType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t PullZoneModel_ShieldDDosProtectionType) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *PullZoneModel_ShieldDDosProtectionType) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
