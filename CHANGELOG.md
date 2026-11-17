@@ -2,6 +2,12 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.5.0, 2026-11-17
+
+- `UsageBreakdown.TotalUnits` is now `*float64` instead of `*int64`. Code that reads or assigns this field must change.
+- The minimum Go version in `go.mod` is now 1.26.11, which fixes GO-2026-6859 in `net/http` reported by govulncheck.
+- The development image `Dockerfile.dev` and the setup reference now use Go 1.26.11.
+
 ## v0.4.0, 2026-10-30
 
 - Several model fields now use generated union wrapper types instead of the plain enum types. Code that reads or assigns these fields must change. The wrappers have `As...`, `From...` and `Merge...` methods for the old enum type.

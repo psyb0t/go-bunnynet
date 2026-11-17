@@ -6274,7 +6274,7 @@ type UsageBreakdown struct {
 	MeasuringUnit *string `json:"MeasuringUnit,omitempty"`
 
 	// TotalUnits The billed quantity for the related product
-	TotalUnits *int64 `json:"TotalUnits,omitempty"`
+	TotalUnits *float64 `json:"TotalUnits,omitempty"`
 
 	// Usage The usage based charge in USD
 	Usage *float64 `json:"Usage,omitempty"`
